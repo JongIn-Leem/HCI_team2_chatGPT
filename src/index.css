@@ -95,3 +95,24 @@ button {
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 }
+
+/* 기본적으로 숨기기 */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* hover 시만 보이게 */
+.custom-scrollbar:hover::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* 스크롤바 트랙 */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 스크롤바 썸 */
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: hsla(0, 0%, 50%, 0.3);
+  border-radius: 6px;
+}
