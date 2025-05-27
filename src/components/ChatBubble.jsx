@@ -6,7 +6,7 @@ export default function ChatBubble({ role, content }) {
       className={`w-full flex ${isUser ? "justify-end" : "justify-start"} my-2`}
     >
       <div
-        className={`max-w-[75%] px-4 py-2 rounded-full text-base ${
+        className={`max-w-[75%] px-4 py-2 rounded-2xl text-base text-left whitespace-pre-line ${
           isUser ? "bg-gray-100 " : "bg-transparent"
         }`}
       >

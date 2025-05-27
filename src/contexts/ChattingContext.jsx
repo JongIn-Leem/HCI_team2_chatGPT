@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { chatList as initialChatList } from "@/data/chatData";
 
 const DEFAULT_CONTEXT_VALUE = {
   currentChat: null,
@@ -8,21 +9,26 @@ const DEFAULT_CONTEXT_VALUE = {
 const ChattingContext = createContext(DEFAULT_CONTEXT_VALUE);
 
 const ChattingProvider = ({ children }) => {
+  const [chatList, setChatList] = useState(initialChatList);
   const [currentChat, setCurrentChat] = useState(null);
 
   return (
-    <ChattingContext.Provider value={{ currentChat, setCurrentChat }}>
+    <ChattingContext.Provider
+      value={{ chatList, setChatList, currentChat, setCurrentChat }}
+    >
       {children}
     </ChattingContext.Provider>
   );
 };
 
 const useChatting = () => {
-  const { currentChat, setCurrentChat } = useContext(ChattingContext);
-  if (!setCurrentChat) {
+  const { chatList, setChatList, currentChat, setCurrentChat } =
+    useContext(ChattingContext);
+  if (!setCurrentChat || !setChatList) {
     throw new Error("useChatting must be used within a ChattingProvider");
   }
-  return { currentChat, setCurrentChat };
+
+  return { chatList, setChatList, currentChat, setCurrentChat };
 };
 
 export { ChattingProvider, useChatting };
