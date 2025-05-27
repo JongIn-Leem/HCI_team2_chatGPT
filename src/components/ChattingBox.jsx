@@ -7,8 +7,8 @@ const ChattingBox = ({ chat, isActive }) => {
   return (
     <div
       onClick={() => setCurrentChat(chat)}
-      className={classNames("text-left p-2 rounded-xl mb-2 text-base", {
-        "bg-gray-200 font-semibold hover:bg-gray-300": isActive,
+      className={classNames("text-left p-2 w-53 rounded-lg mb-2 text-sm", {
+        "bg-gray-200  hover:bg-gray-300": isActive,
         "hover:bg-gray-200": !isActive,
       })}
     >

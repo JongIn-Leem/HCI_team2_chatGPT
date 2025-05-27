@@ -12,6 +12,7 @@ import Search from "./search.svg?react";
 import Text from "./text.svg?react";
 import Grid from "./grid.svg?react";
 import Plan from "./plan.svg?react";
+import VoiceMode from "./voice_mode.svg?react";
 
 export {
   SideBar,
@@ -28,4 +29,5 @@ export {
   Text,
   Grid,
   Plan,
+  VoiceMode,
 };

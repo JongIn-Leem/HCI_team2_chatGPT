@@ -11,7 +11,8 @@ export const chatList = [
       { role: "user", content: "React가 뭐야?" },
       {
         role: "assistant",
-        content: "React는 UI를 만들기 위한 JavaScript 라이브러리입니다.",
+        content:
+          "React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.React는 UI를 만들기 위한 JavaScript 라이브러리입니다.",
       },
       { role: "user", content: "React가 뭐야?" },
       {
