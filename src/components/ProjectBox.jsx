@@ -4,8 +4,8 @@ import classNames from "classnames";
 import { useRef, useEffect, useState } from "react";
 import KebabPortal from "./KebabPortal.jsx";
 
-const ChattingBox = ({ chat, isActive, isKebabOpen, setKebabOpen }) => {
-  const { setCurrentChat, projectList, setCurrentProject } = useChatting();
+const ProjectBox = ({ project, isActive, isKebabOpen, setKebabOpen }) => {
+  const { setCurrentChat, setCurrentProject } = useChatting();
   const kebabRef = useRef(null);
 
   const [kebabPos, setKebabPos] = useState({ top: 0, left: 0 });
@@ -17,7 +17,7 @@ const ChattingBox = ({ chat, isActive, isKebabOpen, setKebabOpen }) => {
       top: rect.bottom,
       left: rect.right - 35,
     });
-    setKebabOpen({ type: "chat", id: chat.id });
+    setKebabOpen({ type: "project", id: project.id });
   };
 
   useEffect(() => {
@@ -34,25 +34,25 @@ const ChattingBox = ({ chat, isActive, isKebabOpen, setKebabOpen }) => {
     <div className="relative w-full">
       <div
         onClick={() => {
-          setCurrentChat(chat);
-          setCurrentProject(
-            chat.project
-              ? projectList.find((project) => project.id == chat.project)
-              : null
-          );
+          setCurrentChat(null);
+          setCurrentProject(project);
         }}
         className={classNames(
-          "flex justify-between items-center p-2 w-full rounded-lg mb-0.5 cursor-pointer group hover:bg-gray-200",
+          "flex justify-between items-center pr-2 w-full rounded-lg mb-0.5 cursor-pointer group hover:bg-gray-200",
           {
             "bg-gray-200": isActive,
           }
         )}
       >
-        <p className="text-base">{chat.title}</p>
+        <div className="flex justify-start items-center">
+          <Icons.Folder className="p-2.5 w-10 h-10"></Icons.Folder>
+          <p className="text-base">{project.title}</p>
+        </div>
+
         <div
           onClick={(e) => {
             e.stopPropagation();
-            setKebabOpen({ type: "chat", id: chat.id }); // 현재 chat.id로 모달 열기
+            setKebabOpen({ type: "project", id: project.id });
             handleKebabClick(e);
           }}
         >
@@ -68,4 +68,4 @@ const ChattingBox = ({ chat, isActive, isKebabOpen, setKebabOpen }) => {
   );
 };
 
-export default ChattingBox;
+export default ProjectBox;

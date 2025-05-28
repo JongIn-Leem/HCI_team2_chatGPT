@@ -35,7 +35,7 @@ export default function MainPage() {
   return (
     <div className="flex h-screen">
       <div
-        className={`bg-gray-300 overflow-hidden transition-all duration-300 ${
+        className={`bg-gray-300 overflow-x-hidden transition-all duration-300 ${
           isSideBarOpen ? "w-64" : "w-0"
         }`}
       >
@@ -59,7 +59,7 @@ export default function MainPage() {
             </div>
           </div>
         ) : (
-          <div></div>
+          <div className=""></div>
         )}
         {shouldShowPrompt && (
           <Prompt chatRef={chatRef} setBottomPadding={setBottomPadding} />
