@@ -8,6 +8,13 @@ export const Prompt = ({ chatRef, lastMsgRef, setBottomPadding }) => {
   const [showArrow, setShowArrow] = useState(false);
   const { chatList, setChatList, currentChat, setCurrentChat } = useChatting();
   const isComposingRef = useRef(false);
+  const textareaRef = useRef(null);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, [currentChat]);
 
   useEffect(() => {
     const scroll = chatRef.current;
@@ -64,17 +71,22 @@ export const Prompt = ({ chatRef, lastMsgRef, setBottomPadding }) => {
         setChatList((prevList) =>
           prevList.map((chat) =>
             chat.id === currentChat.id
-              ? { ...chat, messages: [...chat.messages, newMessage] }
+              ? {
+                  ...chat,
+                  updatedAt: Date.now(),
+                  messages: [...chat.messages, newMessage],
+                }
               : chat
           )
         );
       } else {
         const titleText = newMessage.content;
         const title =
-          titleText.length > 13 ? titleText.slice(0, 13) + "..." : titleText;
+          titleText.length > 13 ? titleText.slice(0, 13) + ".." : titleText;
         const newChat = {
           id: Date.now(),
           title,
+          updatedAt: Date.now(),
           messages: [newMessage],
         };
 
@@ -118,6 +130,7 @@ export const Prompt = ({ chatRef, lastMsgRef, setBottomPadding }) => {
       )}
       <div className=" bg-white rounded-3xl border-2 border-gray-200">
         <textarea
+          ref={textareaRef}
           className="w-230 h-20 overflow-y-auto p-5 text-lg text-gray-600 bg-transparent outline-none resize-none"
           placeholder="무엇이든 물어보세요"
           value={text}
@@ -128,14 +141,14 @@ export const Prompt = ({ chatRef, lastMsgRef, setBottomPadding }) => {
         ></textarea>
         <div className="flex items-center justify-between">
           <div className="p-2 flex items-center">
-            <Icons.Plus className="p-2 w-10 h-10 hover:bg-gray-300 rounded-full cursor-pointer" />
-            <div className="h-10 pr-2 flex items-center hover:bg-gray-300 rounded-full cursor-pointer">
+            <Icons.Plus className="p-2 w-10 h-10 hover:bg-gray-100 rounded-full cursor-pointer" />
+            <div className="h-10 pr-2 flex items-center hover:bg-gray-100 rounded-full cursor-pointer">
               <Icons.Filter className="p-2 w-10 h-10" />
               <p className="text-m">도구</p>
             </div>
           </div>
           <div className="p-2 flex items-center">
-            <Icons.Voice className="p-2 w-10 h-10 hover:bg-gray-300 rounded-full cursor-pointer" />
+            <Icons.Voice className="p-2 w-10 h-10 hover:bg-gray-100 rounded-full cursor-pointer" />
             {text ? (
               <Icons.ArrowUp className="ml-1 p-2 w-10 h-10 text-white bg-black hover:bg-gray-300 rounded-full cursor-pointer" />
             ) : (
@@ -144,9 +157,11 @@ export const Prompt = ({ chatRef, lastMsgRef, setBottomPadding }) => {
           </div>
         </div>
       </div>
-      <p className="w-full h-5 bg-white text-sm">
-        ChatGPT는 실수를 할 수 있습니다. 중요한 정보는 재차 확인하세요.
-      </p>
+      {currentChat && (
+        <p className="w-full h-5 bg-white text-sm">
+          ChatGPT는 실수를 할 수 있습니다. 중요한 정보는 재차 확인하세요.
+        </p>
+      )}
     </div>
   );
 };
