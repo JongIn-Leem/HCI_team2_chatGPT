@@ -6,10 +6,10 @@ export const ResponseChatBubble = ({
   setPendingResponse,
   isResponding,
   setIsResponding,
+  bindInterruptRef,
 }) => {
   const { setChatList, currentChat } = useChatting();
   const [displayed, setDisplayed] = useState("");
-  const index = useRef(0);
   const intervalRef = useRef(null);
   const hasCompleted = useRef(false);
 
@@ -36,6 +36,15 @@ export const ResponseChatBubble = ({
       setIsResponding(false);
     }, 0);
   };
+
+  useEffect(() => {
+    if (bindInterruptRef) {
+      bindInterruptRef.current = () => {
+        clearInterval(intervalRef.current);
+        onComplete(displayed);
+      };
+    }
+  }, [displayed]);
 
   useEffect(() => {
     if (!isResponding) return;

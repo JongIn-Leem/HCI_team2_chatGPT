@@ -20,6 +20,16 @@ import Close from "./close.svg?react";
 import Copy from "./copy.svg?react";
 import Edit from "./edit.svg?react";
 import Speak from "./speak.svg?react";
+import Good from "./good.svg?react";
+import GoodFill from "./good_fill.svg?react";
+import Bad from "./bad.svg?react";
+import BadFill from "./bad_fill.svg?react";
+import Check from "./check.svg?react";
+import NewFolder from "./new_folder.svg?react";
+import FolderOpen from "./folder_open.svg?react";
+import Library from "./library.svg?react";
+import ArrowUpFull from "./arrow_up_full.svg?react";
+import Stop from "./stop.svg?react";
 
 export {
   SideBar,
@@ -44,4 +54,14 @@ export {
   Copy,
   Edit,
   Speak,
+  Good,
+  GoodFill,
+  Bad,
+  BadFill,
+  Check,
+  NewFolder,
+  FolderOpen,
+  Library,
+  ArrowUpFull,
+  Stop,
 };
