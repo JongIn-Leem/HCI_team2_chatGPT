@@ -9,3 +9,4 @@ export * from "./KebabPortal";
 export * from "./ResponseButtons";
 export * from "./PromptButtons";
 export * from "./FilterPortal";
+export * from "./ChatSearchModal";

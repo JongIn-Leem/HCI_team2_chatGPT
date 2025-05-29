@@ -30,6 +30,7 @@ import FolderOpen from "./folder_open.svg?react";
 import Library from "./library.svg?react";
 import ArrowUpFull from "./arrow_up_full.svg?react";
 import Stop from "./stop.svg?react";
+import SpeechBalloons from "./speech_balloons.svg?react";
 
 export {
   SideBar,
@@ -64,4 +65,5 @@ export {
   Library,
   ArrowUpFull,
   Stop,
+  SpeechBalloons,
 };
