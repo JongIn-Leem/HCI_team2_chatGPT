@@ -1,4 +1,4 @@
-export default function ChatBubble({ role, content }) {
+export const ChatBubble = ({ role, content }) => {
   const isUser = role === "user";
 
   return (
@@ -14,4 +14,4 @@ export default function ChatBubble({ role, content }) {
       </div>
     </div>
   );
-}
+};

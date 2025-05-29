@@ -1,8 +1,14 @@
-import ChatBubble from "@/components/ChatBubble";
 import React from "react";
 import { useEffect, useRef, useState } from "react";
-import { SideBar, Header, Prompt } from "@/components";
+import {
+  SideBar,
+  Header,
+  Prompt,
+  ChatBubble,
+  ResponseChatBubble,
+} from "@/components";
 import { useSideBar, useChatting } from "@/contexts";
+import { randomResponse } from "@/data/RandomResponse";
 
 export default function MainPage() {
   const { isSideBarOpen } = useSideBar();
@@ -32,6 +38,17 @@ export default function MainPage() {
     setBottomPadding(200);
   }, [currentChat]);
 
+  const [isResponding, setIsResponding] = useState(false);
+  const [pendingResponse, setPendingResponse] = useState(null);
+
+  useEffect(() => {
+    if (isResponding && currentChat) {
+      const random =
+        randomResponse[Math.floor(Math.random() * randomResponse.length)];
+      setPendingResponse(random);
+    }
+  }, [isResponding]);
+
   return (
     <div className="flex h-screen">
       <div
@@ -52,6 +69,14 @@ export default function MainPage() {
               {activeChat.messages.map((msg, idx) => (
                 <ChatBubble key={idx} role={msg.role} content={msg.content} />
               ))}
+              {isResponding && pendingResponse && (
+                <ResponseChatBubble
+                  content={pendingResponse}
+                  setPendingResponse={setPendingResponse}
+                  isResponding={isResponding}
+                  setIsResponding={setIsResponding}
+                />
+              )}
               <div
                 className="bg-transparent"
                 style={{ height: `${bottomPadding}px` }}
@@ -62,7 +87,12 @@ export default function MainPage() {
           <div className=""></div>
         )}
         {shouldShowPrompt && (
-          <Prompt chatRef={chatRef} setBottomPadding={setBottomPadding} />
+          <Prompt
+            chatRef={chatRef}
+            setBottomPadding={setBottomPadding}
+            isResponding={isResponding}
+            setIsResponding={setIsResponding}
+          />
         )}
       </div>
     </div>
