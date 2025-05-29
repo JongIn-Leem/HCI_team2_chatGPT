@@ -1,7 +1,7 @@
 import * as Icons from "@/assets/svg";
 import { useSideBar, useChatting } from "@/contexts";
-import { ProjectBox, ChattingBox } from "@/components";
-import { useState } from "react";
+import { ProjectBox, ChattingBox, ChatSearchModal } from "@/components";
+import { useState, useEffect } from "react";
 
 export const SideBar = () => {
   const { sideBarToggle } = useSideBar();
@@ -14,6 +14,15 @@ export const SideBar = () => {
     setCurrentProject,
   } = useChatting();
   const [kebabOpen, setKebabOpen] = useState({ type: null, id: null });
+  const [isChatSearchOpen, setIsChatSearchOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <div className="fixed top-0 left-0 z-30 w-64 h-screen flex flex-col bg-gray-100 border-r border-gray-300 transition-transform duration-300 overflow-visible">
@@ -42,7 +51,10 @@ export const SideBar = () => {
             <Icons.NewChat className="p-2.5 w-10 h-10"></Icons.NewChat>
             <p className="text-base">새 채팅</p>
           </div>
-          <div className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200">
+          <div
+            className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200"
+            onClick={() => setIsChatSearchOpen(true)}
+          >
             <Icons.Search className="p-2.5 w-10 h-10"></Icons.Search>
             <p className="text-base">채팅 검색</p>
           </div>
@@ -102,6 +114,9 @@ export const SideBar = () => {
           </div>
         </div>
       </div>
+      {isChatSearchOpen && (
+        <ChatSearchModal onClose={() => setIsChatSearchOpen(false)} />
+      )}
     </div>
   );
 };
