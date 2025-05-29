@@ -16,7 +16,7 @@ export const SideBar = () => {
   const [kebabOpen, setKebabOpen] = useState({ type: null, id: null });
 
   return (
-    <div className="fixed top-0 left-0 z-20 w-64 h-screen flex flex-col bg-gray-100 border-r border-gray-300 transition-transform duration-300 overflow-visible">
+    <div className="fixed top-0 left-0 z-30 w-64 h-screen flex flex-col bg-gray-100 border-r border-gray-300 transition-transform duration-300 overflow-visible">
       <div className="w-full p-2 border-b border-gray-300 flex items-center justify-between">
         <Icons.ChatGPTLogo
           className="p-2 w-10 h-10 rounded-md cursor-pointer hover:bg-gray-200"
@@ -47,13 +47,13 @@ export const SideBar = () => {
             <p className="text-base">채팅 검색</p>
           </div>
           <div className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200">
-            <Icons.Text className="p-2.75 w-10 h-10"></Icons.Text>
+            <Icons.Library className="p-2.75 w-10 h-10"></Icons.Library>
             <p className="text-base">라이브러리</p>
           </div>
         </div>
         <div className="w-full flex flex-col items-start p-3">
           <div className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200">
-            <Icons.Plus className="p-2.5 w-10 h-10"></Icons.Plus>
+            <Icons.NewFolder className="p-2.5 w-10 h-10"></Icons.NewFolder>
             <p className="text-base">새 프로젝트</p>
           </div>
           {projectList.map((project) => (
@@ -72,10 +72,6 @@ export const SideBar = () => {
           <div className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200">
             <Icons.Grid className="p-2.5 w-10 h-10"></Icons.Grid>
             <p className="text-base">GPT</p>
-          </div>
-          <div className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200">
-            <Icons.Speak className="p-2.5 w-10 h-10"></Icons.Speak>
-            <p className="text-base">Sora</p>
           </div>
         </div>
         <div className="w-full flex flex-col items-start p-3">

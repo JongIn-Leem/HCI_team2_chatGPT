@@ -2,16 +2,19 @@ import { createPortal } from "react-dom";
 import * as Icons from "@/assets/svg";
 import React from "react";
 
-export const KebabPortal = ({ kebabPos, kebabRef, isKebabOpen }) => {
-  if (!isKebabOpen) return null;
+export const FilterPortal = ({ isOpen, filterRef, filterPos }) => {
+  if (!isOpen) return null;
 
   return createPortal(
     <div
-      ref={kebabRef}
-      style={{ top: `${kebabPos.top}px`, left: `${kebabPos.left}px` }}
-      className="fixed w-45 bg-white border border-gray-300 shadow-lg rounded-2xl z-50"
+      ref={filterRef}
+      className="fixed z-50 w-45 bg-white border border-gray-300 rounded-3xl shadow-md"
+      style={{
+        top: `${filterPos.top}px`,
+        left: `${filterPos.left}px`,
+      }}
     >
-      <div className="w-full p-2  flex flex-col items-center">
+      <div className="w-full p-2 flex flex-col items-center">
         <div className="w-full px-2 py-1.5 flex justify-start items-center rounded-xl hover:bg-gray-100 cursor-pointer">
           <Icons.Edit className="w-5 h-5 mr-2" />
           <p>이름 바꾸기</p>
