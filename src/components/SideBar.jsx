@@ -1,8 +1,7 @@
 import * as Icons from "@/assets/svg";
 import { useSideBar, useChatting } from "@/contexts";
-import ChattingBox from "./ChattingBox";
-import ProjectBox from "./ProjectBox";
-import { useEffect, useState } from "react";
+import { ProjectBox, ChattingBox } from "@/components";
+import { useState } from "react";
 
 export const SideBar = () => {
   const { sideBarToggle } = useSideBar();

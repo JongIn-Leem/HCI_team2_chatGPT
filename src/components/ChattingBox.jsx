@@ -2,9 +2,9 @@ import * as Icons from "@/assets/svg";
 import { useChatting } from "@/contexts/ChattingContext";
 import classNames from "classnames";
 import { useRef, useEffect, useState } from "react";
-import KebabPortal from "./KebabPortal.jsx";
+import { KebabPortal } from "@/components";
 
-const ChattingBox = ({ chat, isActive, isKebabOpen, setKebabOpen }) => {
+export const ChattingBox = ({ chat, isActive, isKebabOpen, setKebabOpen }) => {
   const { setCurrentChat, projectList, setCurrentProject } = useChatting();
   const kebabRef = useRef(null);
 
@@ -67,5 +67,3 @@ const ChattingBox = ({ chat, isActive, isKebabOpen, setKebabOpen }) => {
     </div>
   );
 };
-
-export default ChattingBox;

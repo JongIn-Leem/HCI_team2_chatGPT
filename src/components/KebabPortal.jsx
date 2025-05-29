@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import * as Icons from "@/assets/svg";
 import React from "react";
 
-const KebabPortal = ({ kebabPos, kebabRef, isKebabOpen }) => {
+export const KebabPortal = ({ kebabPos, kebabRef, isKebabOpen }) => {
   if (!isKebabOpen) return null;
 
   return createPortal(
@@ -38,5 +38,3 @@ const KebabPortal = ({ kebabPos, kebabRef, isKebabOpen }) => {
     document.body
   );
 };
-
-export default KebabPortal;

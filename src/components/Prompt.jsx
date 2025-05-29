@@ -3,7 +3,12 @@ import classNames from "classnames";
 import { useState, useEffect, useRef } from "react";
 import { useChatting } from "@/contexts/";
 
-export const Prompt = ({ chatRef, lastMsgRef, setBottomPadding }) => {
+export const Prompt = ({
+  chatRef,
+  setBottomPadding,
+  isResponding,
+  setIsResponding,
+}) => {
   const [text, setText] = useState("");
   const [showArrow, setShowArrow] = useState(false);
   const { chatList, setChatList, currentChat, setCurrentChat } = useChatting();
@@ -100,6 +105,7 @@ export const Prompt = ({ chatRef, lastMsgRef, setBottomPadding }) => {
       setTimeout(() => {
         scrollToBottom();
       }, 0);
+      setIsResponding(true);
     }
   };
 
