@@ -31,6 +31,8 @@ import Library from "./library.svg?react";
 import ArrowUpFull from "./arrow_up_full.svg?react";
 import Stop from "./stop.svg?react";
 import SpeechBalloons from "./speech_balloons.svg?react";
+import NewFile from "./new_file.svg?react";
+import Pen from "./pen.svg?react";
 
 export {
   SideBar,
@@ -66,4 +68,6 @@ export {
   ArrowUpFull,
   Stop,
   SpeechBalloons,
+  NewFile,
+  Pen,
 };
