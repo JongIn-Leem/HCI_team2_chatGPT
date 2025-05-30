@@ -2,7 +2,7 @@ export const chatList = [
   {
     id: "1",
     project: null,
-    title: "React에 대해 물어보기",
+    title: "React에 대해 물어보기React에 대해 물어보기",
     updatedAt: 1716812553510,
     messages: [
       { role: "user", content: "React가 뭐야?" },
@@ -50,8 +50,8 @@ export const chatList = [
   },
   {
     id: "2",
-    project: "1",
-    title: "프롬프트 디자인",
+    project: 1,
+    title: "프롬프트 디자인React에 대해 물어보기React에 대해 물어보기",
     updatedAt: 1716812553509,
     messages: [
       { role: "user", content: "프롬프트를 어떻게 디자인해야 할까?" },
@@ -63,7 +63,7 @@ export const chatList = [
   },
   {
     id: "3",
-    project: "2",
+    project: 2,
     title: "React에 대해 물어보기",
     updatedAt: 1716812553508,
     messages: [
@@ -76,7 +76,7 @@ export const chatList = [
   },
   {
     id: "4",
-    project: "2",
+    project: 2,
     title: "프롬프트 디자인",
     updatedAt: 1716812553507,
     messages: [
@@ -89,7 +89,7 @@ export const chatList = [
   },
   {
     id: "5",
-    project: "2",
+    project: 2,
     title: "React에 대해 물어보기",
     updatedAt: 1716812553506,
     messages: [
@@ -102,7 +102,7 @@ export const chatList = [
   },
   {
     id: "6",
-    project: "1",
+    project: 1,
     title: "프롬프트 디자인",
     updatedAt: 1716812553505,
     messages: [
@@ -115,7 +115,7 @@ export const chatList = [
   },
   {
     id: "7",
-    project: null,
+    project: 1,
     title: "React에 대해 물어보기",
     updatedAt: 1716812553504,
     messages: [
@@ -128,7 +128,7 @@ export const chatList = [
   },
   {
     id: "8",
-    project: null,
+    project: 1,
     title: "프롬프트 디자인",
     updatedAt: 1716812553503,
     messages: [
@@ -141,7 +141,7 @@ export const chatList = [
   },
   {
     id: "9",
-    project: null,
+    project: 1,
     title: "React에 대해 물어보기",
     updatedAt: 1716812553502,
     messages: [
@@ -183,6 +183,58 @@ export const chatList = [
     project: 1,
     title: "프롬프트 디자인",
     updatedAt: 1716812553499,
+    messages: [
+      { role: "user", content: "프롬프트를 어떻게 디자인해야 할까?" },
+      {
+        role: "assistant",
+        content: "프롬프트는 명확하고 구체적이어야 합니다.",
+      },
+    ],
+  },
+  {
+    id: "13",
+    project: null,
+    title: "React에 대해 물어보기",
+    updatedAt: 1716812553600,
+    messages: [
+      { role: "user", content: "React가 뭐야?" },
+      {
+        role: "assistant",
+        content: "React는 UI를 만들기 위한 JavaScript 라이브러리입니다.",
+      },
+    ],
+  },
+  {
+    id: "14",
+    project: 1,
+    title: "프롬프트 디자인",
+    updatedAt: 1716812553700,
+    messages: [
+      { role: "user", content: "프롬프트를 어떻게 디자인해야 할까?" },
+      {
+        role: "assistant",
+        content: "프롬프트는 명확하고 구체적이어야 합니다.",
+      },
+    ],
+  },
+  {
+    id: "15",
+    project: null,
+    title: "React에 대해 물어보기",
+    updatedAt: 1716812553800,
+    messages: [
+      { role: "user", content: "React가 뭐야?" },
+      {
+        role: "assistant",
+        content: "React는 UI를 만들기 위한 JavaScript 라이브러리입니다.",
+      },
+    ],
+  },
+  {
+    id: "16",
+    project: 1,
+    title: "프롬프트 디자인",
+    updatedAt: 1716812553900,
     messages: [
       { role: "user", content: "프롬프트를 어떻게 디자인해야 할까?" },
       {

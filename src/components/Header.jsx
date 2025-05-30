@@ -3,10 +3,11 @@ import { useState, useEffect } from "react";
 import { useSideBar } from "@/contexts";
 import { useChatting } from "@/contexts/ChattingContext";
 
-export const Header = ({ activeChat }) => {
+export const Header = () => {
   const { isSideBarOpen, sideBarToggle } = useSideBar();
   const [showIcon, setShowIcon] = useState(true);
-  const { setCurrentChat, currentProject, setCurrentProject } = useChatting();
+  const { currentChat, setCurrentChat, currentProject, setCurrentProject } =
+    useChatting();
 
   useEffect(() => {
     if (isSideBarOpen) {
@@ -19,9 +20,9 @@ export const Header = ({ activeChat }) => {
 
   return (
     <div
-      className={`fixed top-0 z-10 bg-white transition-all duration-300 border-b border-gray-300 ${
+      className={`fixed top-0 z-10 bg-white transition-all duration-300  ${
         isSideBarOpen ? "left-64 w-[calc(100%-16rem)]" : "left-0 w-full"
-      }`}
+      } ${!currentChat && currentProject ? "" : "border-b border-gray-300"}`}
     >
       <div className="flex items-center justify-between p-2">
         <div className={`flex `}>
@@ -43,28 +44,30 @@ export const Header = ({ activeChat }) => {
               />
             </div>
           )}
-          {currentProject ? (
+          {currentChat && currentProject ? (
             <>
               <div className="flex items-center justify-start h-10">
-                <p className="text-xl font-bold p-2 text-gray-600 rounded-xl cursor-pointer hover:bg-gray-100">
+                <p className="text-xl font-bold p-2 px-4 text-gray-600 rounded-xl cursor-pointer hover:bg-gray-100">
                   {currentProject.title}
                 </p>
               </div>
-              <Icons.ArrowRight className="py-2 w-6 h-10 text-gray-600" />
+              <Icons.ArrowRight className="py-2.5 w-6 h-10 text-gray-400" />
               <div className="flex items-center rounded-xl cursor-pointer hover:bg-gray-100">
                 <p className="text-xl font-bold pl-2 text-gray-600 ">
-                  {activeChat.title}
+                  {currentChat.title}
                 </p>
-                <p className="text-sm pl-2 text-gray-600">4o</p>
-                <Icons.ArrowDown className="p-2 w-10 h-10 text-gray-600" />
+                <p className="text-sm font-semibold px-1  mt-0.5 ml-1 text-gray-500 rounded-md bg-gray-100">
+                  4o
+                </p>
+                <Icons.ArrowDown className="p-2.5 w-10 h-10 text-gray-400" />
               </div>
             </>
           ) : (
             <>
-              <div className="flex items-center gap-2 pl-2 rounded-xl cursor-pointer hover:bg-gray-100">
-                <p className="text-xl font-bold text-gray-600 ">ChatGPT</p>
-                <p className="text-sm text-gray-600">4o</p>
-                <Icons.ArrowDown className="p-2 w-10 h-10 text-gray-600" />
+              <div className="flex items-center pl-2 rounded-xl cursor-pointer hover:bg-gray-100">
+                <p className="px-2 text-xl font-semibold ">ChatGPT</p>
+                <p className="text-lg font-semibold text-gray-400">4o</p>
+                <Icons.ArrowDown className="p-2.5 w-10 h-10 text-gray-400" />
               </div>
             </>
           )}

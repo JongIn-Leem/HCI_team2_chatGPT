@@ -4,12 +4,7 @@ import classNames from "classnames";
 import { useRef, useEffect, useState } from "react";
 import { KebabPortal } from "@/components";
 
-export const ProjectBox = ({
-  project,
-  isActive,
-  isKebabOpen,
-  setKebabOpen,
-}) => {
+export const ProjectBox = ({ project, isKebabOpen, setKebabOpen }) => {
   const { setCurrentChat, setCurrentProject } = useChatting();
   const kebabRef = useRef(null);
 
@@ -42,12 +37,7 @@ export const ProjectBox = ({
           setCurrentChat(null);
           setCurrentProject(project);
         }}
-        className={classNames(
-          "flex justify-between items-center pr-2 w-full rounded-lg mb-0.5 cursor-pointer group hover:bg-gray-200",
-          {
-            "bg-gray-200": isActive,
-          }
-        )}
+        className="flex justify-between items-center pr-2 w-full rounded-lg cursor-pointer group hover:bg-gray-200"
       >
         <div className="flex justify-start items-center">
           <Icons.Folder className="p-2.5 w-10 h-10"></Icons.Folder>

@@ -10,10 +10,12 @@ export const Prompt = ({
   isResponding,
   setIsResponding,
   responseInterruptRef,
+  onSendStartTransition,
 }) => {
   const [text, setText] = useState("");
   const [showArrow, setShowArrow] = useState(false);
-  const { setChatList, currentChat, setCurrentChat } = useChatting();
+  const { setChatList, currentChat, setCurrentChat, currentProject } =
+    useChatting();
   const isComposingRef = useRef(false);
   const textareaRef = useRef(null);
 
@@ -72,6 +74,13 @@ export const Prompt = ({
         return;
       }
       e.preventDefault();
+      if (onSendStartTransition) {
+        onSendStartTransition();
+        setTimeout(() => {
+          handleSend();
+        }, 300);
+        return;
+      }
       handleSend();
     }
   };
@@ -92,10 +101,13 @@ export const Prompt = ({
             : chat
         )
       );
+      setCurrentChat((prev) =>
+        prev ? { ...prev, messages: [...prev.messages, newMessage] } : prev
+      );
     } else {
       const titleText = newMessage.content;
       const title =
-        titleText.length > 13 ? titleText.slice(0, 13) + ".." : titleText;
+        titleText.length > 25 ? titleText.slice(0, 25) + ".." : titleText;
       const newChat = {
         id: Date.now(),
         title,
@@ -116,8 +128,18 @@ export const Prompt = ({
     setIsResponding(true);
   };
 
+  useEffect(() => {
+    if (text.trim() === "") {
+      textareaRef.current.style.height = "42px";
+    } else {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height =
+        textareaRef.current.scrollHeight + "px";
+    }
+  }, [text]);
+
   return (
-    <div className="w-230 flex flex-col justify-center items-center">
+    <div className="w-200 bg-transparent rounded-3xl flex flex-col justify-center items-center">
       {currentChat && (
         <div className="z-20 fixed bottom-45 bg-transparent flex flex-col justify-center items-center">
           <div
@@ -136,39 +158,30 @@ export const Prompt = ({
           </div>
         </div>
       )}
-      <div
-        className={classNames(
-          "z-20 fixed bg-transparent w-230 flex flex-col justify-center items-center",
-          { " bottom-0": currentChat, "bottom-95": !currentChat }
-        )}
-      >
-        {!currentChat && (
-          <p className="text-3xl font-medium mb-10">무엇을 도와드릴까요?</p>
-        )}
-        <div className="z-20 bg-white rounded-3xl border-2 border-gray-200">
+      <div className="z-20 bg-white rounded-3xl border-2 border-gray-200">
+        <div className="px-5 pt-5">
           <textarea
             ref={textareaRef}
-            className="w-230 h-20 overflow-y-auto p-5 text-lg text-gray-600 outline-none resize-none"
-            placeholder="무엇이든 물어보세요"
+            className="w-190 min-h-10 max-h-60 leading-tight overflow-y-auto text-lg text-gray-600 outline-none resize-none"
+            placeholder={
+              !currentChat && currentProject
+                ? "이 프로젝트 내 새 채팅"
+                : "무엇이든 물어보세요"
+            }
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={handleKeyDown}
             onCompositionStart={() => (isComposingRef.current = true)}
             onCompositionEnd={() => (isComposingRef.current = false)}
           ></textarea>
-          <PromptButtons
-            isTyping={text !== ""}
-            isResponding={isResponding}
-            setIsResponding={setIsResponding}
-            handleSend={handleSend}
-            responseInterruptRef={responseInterruptRef}
-          ></PromptButtons>
         </div>
-        {currentChat && (
-          <p className="w-full h-8 flex items-center justify-center bg-white text-sm text-gray-700">
-            ChatGPT는 실수를 할 수 있습니다. 중요한 정보는 재차 확인하세요.
-          </p>
-        )}
+        <PromptButtons
+          isTyping={text !== ""}
+          isResponding={isResponding}
+          setIsResponding={setIsResponding}
+          handleSend={handleSend}
+          responseInterruptRef={responseInterruptRef}
+        ></PromptButtons>
       </div>
     </div>
   );

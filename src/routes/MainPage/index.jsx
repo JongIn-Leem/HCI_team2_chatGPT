@@ -1,31 +1,21 @@
-import React from "react";
-import * as Icons from "@/assets/svg";
 import { useEffect, useRef, useState } from "react";
 import {
   SideBar,
   Header,
-  Prompt,
-  ChatBubble,
-  ResponseChatBubble,
-  ResponseButtons,
+  ChattingPage,
+  NewChattingPage,
+  ProjectDetailPage,
 } from "@/components";
 import { useSideBar, useChatting } from "@/contexts";
 import { randomResponse } from "@/data/RandomResponse";
-import classNames from "classnames";
 
 export default function MainPage() {
   const { isSideBarOpen } = useSideBar();
-  const { chatList, currentChat } = useChatting();
+  const { currentChat, currentProject } = useChatting();
 
   const HIDE_HEADER_PATHS = [];
-  const HIDE_PROMPT_PATHS = [];
 
   const shouldShowHeader = !HIDE_HEADER_PATHS.includes(location.pathname);
-  const shouldShowPrompt = !HIDE_PROMPT_PATHS.includes(location.pathname);
-
-  const activeChat = currentChat
-    ? chatList.find((chat) => chat.id === currentChat.id)
-    : null;
 
   const chatRef = useRef(null);
   const [bottomPadding, setBottomPadding] = useState(200);
@@ -39,11 +29,12 @@ export default function MainPage() {
       });
     }
     setBottomPadding(200);
-  }, [currentChat]);
+  }, [currentChat?.id]);
 
   const [isResponding, setIsResponding] = useState(false);
   const [pendingResponse, setPendingResponse] = useState(null);
   const [responseThumbs, setResponseThumbs] = useState({});
+  const [openProjects, setOpenProjects] = useState(new Set());
   const responseInterruptRef = useRef(null);
 
   useEffect(() => {
@@ -59,6 +50,16 @@ export default function MainPage() {
     }
   }, [isResponding]);
 
+  useEffect(() => {
+    if (!currentChat) return;
+    if (!currentChat.project) return;
+    setOpenProjects((prev) => {
+      const newSet = new Set(prev);
+      newSet.add(currentChat.project);
+      return newSet;
+    });
+  }, [currentChat]);
+
   return (
     <div className="flex h-screen">
       <div
@@ -66,51 +67,35 @@ export default function MainPage() {
           isSideBarOpen ? "w-64" : "w-0"
         }`}
       >
-        {isSideBarOpen && <SideBar />}
+        {isSideBarOpen && <SideBar openProjects={openProjects} />}
       </div>
       <div className="flex-1 flex flex-col justify-start items-center transition-transform duration-300">
-        {shouldShowHeader && <Header activeChat={activeChat} />}
-        {activeChat ? (
-          <div
-            ref={chatRef}
-            className=" max-h-[calc(100vh - 200px)] w-full overflow-y-auto custom-scrollbar flex justify-center pt-1 mt-14"
-          >
-            <div className="w-230">
-              {activeChat.messages.map((msg, idx) => (
-                <ChatBubble key={idx} role={msg.role} content={msg.content} />
-              ))}
-              {isResponding && pendingResponse && (
-                <ResponseChatBubble
-                  content={pendingResponse}
-                  setPendingResponse={setPendingResponse}
-                  isResponding={isResponding}
-                  setIsResponding={setIsResponding}
-                  bindInterruptRef={responseInterruptRef}
-                />
-              )}
-              {!isResponding && (
-                <ResponseButtons
-                  thumbs={responseThumbs[currentChat?.id] || null}
-                  setThumbs={(thumb) =>
-                    setResponseThumbs((prev) => ({
-                      ...prev,
-                      [currentChat.id]: thumb,
-                    }))
-                  }
-                  responseInterruptRef={responseInterruptRef}
-                ></ResponseButtons>
-              )}
-              <div
-                className="bg-transparent"
-                style={{ height: `${bottomPadding}px` }}
-              ></div>
-            </div>
-          </div>
-        ) : (
-          <div className=""></div>
+        {shouldShowHeader && <Header />}
+        {currentChat && (
+          <ChattingPage
+            chatRef={chatRef}
+            bottomPadding={bottomPadding}
+            setBottomPadding={setBottomPadding}
+            isResponding={isResponding}
+            setIsResponding={setIsResponding}
+            responseInterruptRef={responseInterruptRef}
+            pendingResponse={pendingResponse}
+            setPendingResponse={setPendingResponse}
+            responseThumbs={responseThumbs}
+            setResponseThumbs={setResponseThumbs}
+          />
         )}
-        {shouldShowPrompt && (
-          <Prompt
+        {!currentChat && !currentProject && (
+          <NewChattingPage
+            chatRef={chatRef}
+            setBottomPadding={setBottomPadding}
+            isResponding={isResponding}
+            setIsResponding={setIsResponding}
+            responseInterruptRef={responseInterruptRef}
+          />
+        )}
+        {!currentChat && currentProject && (
+          <ProjectDetailPage
             chatRef={chatRef}
             setBottomPadding={setBottomPadding}
             isResponding={isResponding}

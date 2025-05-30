@@ -8,13 +8,14 @@ export const ResponseChatBubble = ({
   setIsResponding,
   bindInterruptRef,
 }) => {
-  const { setChatList, currentChat } = useChatting();
+  const { setChatList, currentChat, setCurrentChat } = useChatting();
   const [displayed, setDisplayed] = useState("");
   const intervalRef = useRef(null);
   const hasCompleted = useRef(false);
 
   const onComplete = (finalText) => {
     if (hasCompleted.current) return;
+    const newMessage = { role: "assistant", content: finalText };
     hasCompleted.current = true;
 
     setTimeout(() => {
@@ -23,14 +24,14 @@ export const ResponseChatBubble = ({
           chat.id === currentChat.id
             ? {
                 ...chat,
-                messages: [
-                  ...chat.messages,
-                  { role: "assistant", content: finalText },
-                ],
+                messages: [...chat.messages, newMessage],
                 updatedAt: Date.now(),
               }
             : chat
         )
+      );
+      setCurrentChat((prev) =>
+        prev ? { ...prev, messages: [...prev.messages, newMessage] } : prev
       );
       setPendingResponse(null);
       setIsResponding(false);
