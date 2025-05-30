@@ -20,12 +20,6 @@ export const Prompt = ({
   const textareaRef = useRef(null);
 
   useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.focus();
-    }
-  }, [currentChat]);
-
-  useEffect(() => {
     const scroll = chatRef.current;
     if (!scroll) {
       return;
@@ -168,6 +162,7 @@ export const Prompt = ({
                 ? "이 프로젝트 내 새 채팅"
                 : "무엇이든 물어보세요"
             }
+            autoFocus
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={handleKeyDown}

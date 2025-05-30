@@ -56,18 +56,18 @@ export const Header = () => {
                 <p className="text-xl font-bold pl-2 text-gray-600 ">
                   {currentChat.title}
                 </p>
-                <p className="text-sm font-semibold px-1  mt-0.5 ml-1 text-gray-500 rounded-md bg-gray-100">
+                <p className="text-sm font-semibold px-1 mt-0.5 ml-1 text-gray-500 rounded-md bg-gray-100">
                   4o
                 </p>
-                <Icons.ArrowDown className="p-2.5 w-10 h-10 text-gray-400" />
+                <Icons.ArrowDown className="py-2.5 w-7 h-10 text-gray-400" />
               </div>
             </>
           ) : (
             <>
               <div className="flex items-center pl-2 rounded-xl cursor-pointer hover:bg-gray-100">
                 <p className="px-2 text-xl font-semibold ">ChatGPT</p>
-                <p className="text-lg font-semibold text-gray-400">4o</p>
-                <Icons.ArrowDown className="p-2.5 w-10 h-10 text-gray-400" />
+                <p className="text-xl font-semibold text-gray-400">4o</p>
+                <Icons.ArrowDown className="py-2.5 w-7 h-10 text-gray-400" />
               </div>
             </>
           )}

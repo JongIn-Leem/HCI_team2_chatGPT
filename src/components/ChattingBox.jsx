@@ -51,7 +51,7 @@ export const ChattingBox = ({ chat, isActive, isKebabOpen, setKebabOpen }) => {
         className={classNames(
           "flex justify-between items-center p-2 w-full rounded-lg cursor-pointer group ",
           {
-            "bg-gray-300 ": isActive,
+            "bg-gray-200 ": isActive,
             "hover:bg-gray-200": !isActive,
           },
           {

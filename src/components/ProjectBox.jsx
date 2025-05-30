@@ -5,7 +5,8 @@ import { useRef, useEffect, useState } from "react";
 import { KebabPortal } from "@/components";
 
 export const ProjectBox = ({ project, isKebabOpen, setKebabOpen }) => {
-  const { setCurrentChat, setCurrentProject } = useChatting();
+  const { currentChat, setCurrentChat, currentProject, setCurrentProject } =
+    useChatting();
   const kebabRef = useRef(null);
 
   const [kebabPos, setKebabPos] = useState({ top: 0, left: 0 });
@@ -37,7 +38,12 @@ export const ProjectBox = ({ project, isKebabOpen, setKebabOpen }) => {
           setCurrentChat(null);
           setCurrentProject(project);
         }}
-        className="flex justify-between items-center pr-2 w-full rounded-lg cursor-pointer group hover:bg-gray-200"
+        className={classNames(
+          "flex justify-between items-center pr-2 w-full rounded-lg cursor-pointer group hover:bg-gray-200",
+          {
+            "bg-gray-200": !currentChat && currentProject?.id === project.id,
+          }
+        )}
       >
         <div className="flex justify-start items-center">
           <Icons.Folder className="p-2.5 w-10 h-10"></Icons.Folder>

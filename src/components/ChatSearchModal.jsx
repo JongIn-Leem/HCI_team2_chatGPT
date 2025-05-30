@@ -1,9 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import * as Icons from "@/assets/svg";
 import { useChatting } from "@/contexts";
-import { ChattingBox } from "@/components";
 
-// 로딩 애니메이션 컴포넌트 (심플 버전)
 const LoadingAnimation = () => (
   <div className="flex flex-col items-center justify-center w-full py-10">
     {/* 동그라미 */}
@@ -19,8 +17,7 @@ const LoadingAnimation = () => (
 
 export const ChatSearchModal = ({ onClose }) => {
   const modalRef = useRef(null);
-  const { chatList, currentChat, setCurrentChat, setCurrentProject } =
-    useChatting();
+  const { chatList, setCurrentChat, setCurrentProject } = useChatting();
 
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(false);

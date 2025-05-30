@@ -33,6 +33,7 @@ import Stop from "./stop.svg?react";
 import SpeechBalloons from "./speech_balloons.svg?react";
 import NewFile from "./new_file.svg?react";
 import Pen from "./pen.svg?react";
+import Bulb from "./bulb.svg?react";
 
 export {
   SideBar,
@@ -70,4 +71,5 @@ export {
   SpeechBalloons,
   NewFile,
   Pen,
+  Bulb,
 };
