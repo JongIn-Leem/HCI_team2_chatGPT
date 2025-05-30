@@ -1,6 +1,11 @@
 import * as Icons from "@/assets/svg";
 import { useSideBar, useChatting } from "@/contexts";
-import { ProjectBox, ChattingBox, ChatSearchModal } from "@/components";
+import {
+  ProjectBox,
+  ChattingBox,
+  ChatSearchModal,
+  NewProjectModal,
+} from "@/components";
 import { useState, useEffect } from "react";
 
 export const SideBar = ({ openProjects = new Set() }) => {
@@ -10,15 +15,18 @@ export const SideBar = ({ openProjects = new Set() }) => {
     currentChat,
     setCurrentChat,
     projectList,
-    currentProject,
     setCurrentProject,
   } = useChatting();
   const [kebabOpen, setKebabOpen] = useState({ type: null, id: null });
   const [isChatSearchOpen, setIsChatSearchOpen] = useState(false);
+  const [isNewProjectOpen, setIsNewProjectOpen] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "Escape") setIsChatSearchOpen(false);
+      if (e.key === "Escape") {
+        setIsChatSearchOpen(false);
+        setIsNewProjectOpen(false);
+      }
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
@@ -120,23 +128,29 @@ export const SideBar = ({ openProjects = new Set() }) => {
           </div>
         </div>
         <div className="w-full flex flex-col items-start p-3">
-          <div className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer">
+          <div
+            className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer"
+            onClick={() => setIsNewProjectOpen(true)}
+          >
             <Icons.NewFolder className="p-2.5 w-10 h-10"></Icons.NewFolder>
             <p className="text-base">새 프로젝트</p>
           </div>
-          {projectList.map((project) => (
-            <div className="w-full" key={project.id}>
-              <ProjectBox
-                project={project}
-                isKebabOpen={
-                  kebabOpen?.type === "project" && kebabOpen?.id === project.id
-                }
-                setKebabOpen={setKebabOpen}
-                isOpen={openProjects.has(project.id)}
-              />
-              {openProjects.has(project.id) && renderChattingBoxes(project)}
-            </div>
-          ))}
+          {projectList
+            .sort((a, b) => b.createdAt - a.createdAt)
+            .map((project) => (
+              <div className="w-full" key={project.id}>
+                <ProjectBox
+                  project={project}
+                  isKebabOpen={
+                    kebabOpen?.type === "project" &&
+                    kebabOpen?.id === project.id
+                  }
+                  setKebabOpen={setKebabOpen}
+                  isOpen={openProjects.has(project.id)}
+                />
+                {openProjects.has(project.id) && renderChattingBoxes(project)}
+              </div>
+            ))}
         </div>
         <div className="w-full flex flex-col items-start p-3">
           <div className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer">
@@ -175,6 +189,9 @@ export const SideBar = ({ openProjects = new Set() }) => {
       </div>
       {isChatSearchOpen && (
         <ChatSearchModal onClose={() => setIsChatSearchOpen(false)} />
+      )}
+      {isNewProjectOpen && (
+        <NewProjectModal onClose={() => setIsNewProjectOpen(false)} />
       )}
     </div>
   );
