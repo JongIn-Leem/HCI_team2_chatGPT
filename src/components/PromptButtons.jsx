@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import * as Icons from "@/assets/svg";
 import { FilterPortal } from "@/components";
 import { useChatting } from "@/contexts/";
+import classNames from "classnames";
 
 export const PromptButtons = ({
   isTyping,
@@ -13,6 +14,7 @@ export const PromptButtons = ({
   const [hoveredId, setHoveredId] = useState(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterPos, setFilterPos] = useState({ top: 0, left: 0 });
+  const [selectedFilter, setSelectedFilter] = useState(null);
   const filterRef = useRef(null);
   const filterButtonRef = useRef(null);
 
@@ -30,6 +32,11 @@ export const PromptButtons = ({
     setIsFilterOpen(true);
   };
 
+  const clearFilter = () => {
+    setSelectedFilter(null);
+    setIsFilterOpen(false);
+  };
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -44,8 +51,31 @@ export const PromptButtons = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const filterOptions = [
+    {
+      id: "draw",
+      label: "이미지",
+      icon: <Icons.Draw className="mr-1 w-5 h-5 text-blue-500" />,
+    },
+    {
+      id: "web",
+      label: "검색",
+      icon: <Icons.Web className="mr-1 w-5 h-5 text-blue-500" />,
+    },
+    {
+      id: "edit",
+      label: "캔버스",
+      icon: <Icons.Edit className="mr-1 w-5 h-5 text-blue-500" />,
+    },
+    {
+      id: "research",
+      label: "리서치",
+      icon: <Icons.DeepResearch className="mr-1 w-5 h-5 text-blue-500" />,
+    },
+  ];
+
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between w-full">
       <div className="p-2 flex items-center">
         <div
           className="relative hover:bg-gray-100 rounded-full cursor-pointer"
@@ -62,14 +92,39 @@ export const PromptButtons = ({
 
         <div
           ref={filterButtonRef}
-          className="h-10 pr-2 flex items-center hover:bg-gray-100 rounded-full cursor-pointer"
+          className={classNames(
+            "relative h-10 flex items-center hover:bg-gray-100 rounded-full cursor-pointer",
+            {
+              "bg-gray-100": isFilterOpen,
+            }
+          )}
           onMouseEnter={() => setHoveredId("filter")}
           onMouseLeave={() => setHoveredId(null)}
           onClick={handleFilterClick}
         >
           <Icons.Filter className="p-2.5 w-10 h-10" />
-          <p className="text-m">도구</p>
+          {!selectedFilter && <p className="text-m pr-3">도구</p>}
+          {!isFilterOpen && selectedFilter && hoveredId === "filter" && (
+            <div className="absolute top-full translate-y-1.5 left-1/2 -translate-x-1/2 mt-1 px-2 py-1 text-sm font-semibold text-white bg-black rounded-md shadow-md whitespace-nowrap z-50">
+              도구 선택하기
+            </div>
+          )}
         </div>
+        {selectedFilter && <p className="text-gray-200 ml-0.5 mr-1">|</p>}
+        {selectedFilter && (
+          <div
+            className="h-10 px-2 py-1 rounded-full hover:bg-blue-50 flex items-center cursor-pointer"
+            onClick={clearFilter}
+            onMouseEnter={() => setHoveredId("clearFilter")}
+            onMouseLeave={() => setHoveredId(null)}
+          >
+            {filterOptions.find((opt) => opt.id === selectedFilter)?.icon}
+            <p className="text-[0.9rem] text-blue-500 mr-1">
+              {filterOptions.find((opt) => opt.id === selectedFilter)?.label}
+            </p>
+            <Icons.Close className="w-4 h-4 text-blue-400" />
+          </div>
+        )}
       </div>
 
       <div className="p-2 flex items-center">
@@ -120,8 +175,11 @@ export const PromptButtons = ({
 
       <FilterPortal
         isOpen={isFilterOpen}
+        setIsFilterOpen={setIsFilterOpen}
         filterRef={filterRef}
         filterPos={filterPos}
+        setSelectedFilter={setSelectedFilter}
+        selectedFilter={selectedFilter}
       />
     </div>
   );

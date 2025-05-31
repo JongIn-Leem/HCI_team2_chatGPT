@@ -17,7 +17,7 @@ export const SideBar = ({ openProjects = new Set() }) => {
     projectList,
     setCurrentProject,
   } = useChatting();
-  const [kebabOpen, setKebabOpen] = useState({ type: null, id: null });
+  const [kebabOpen, setKebabOpen] = useState(null);
   const [isChatSearchOpen, setIsChatSearchOpen] = useState(false);
   const [isNewProjectOpen, setIsNewProjectOpen] = useState(false);
 
@@ -67,9 +67,7 @@ export const SideBar = ({ openProjects = new Set() }) => {
             key={chat.id}
             chat={chat}
             isActive={currentChat?.id === chat.id}
-            isKebabOpen={
-              kebabOpen?.type === "chat" && kebabOpen?.id === chat.id
-            }
+            kebabOpen={kebabOpen}
             setKebabOpen={setKebabOpen}
           />
         ))}
@@ -128,6 +126,16 @@ export const SideBar = ({ openProjects = new Set() }) => {
           </div>
         </div>
         <div className="w-full flex flex-col items-start p-3">
+          <div className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer">
+            <Icons.Grid className="p-2.5 w-10 h-10"></Icons.Grid>
+            <p className="text-base">GPT</p>
+          </div>
+          <div className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer">
+            <Icons.Play className="p-2.5 w-10 h-10"></Icons.Play>
+            <p className="text-base">Sora</p>
+          </div>
+        </div>
+        <div className="w-full flex flex-col items-start p-3">
           <div
             className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer"
             onClick={() => setIsNewProjectOpen(true)}
@@ -141,10 +149,7 @@ export const SideBar = ({ openProjects = new Set() }) => {
               <div className="w-full" key={project.id}>
                 <ProjectBox
                   project={project}
-                  isKebabOpen={
-                    kebabOpen?.type === "project" &&
-                    kebabOpen?.id === project.id
-                  }
+                  kebabOpen={kebabOpen}
                   setKebabOpen={setKebabOpen}
                   isOpen={openProjects.has(project.id)}
                 />
@@ -152,12 +157,7 @@ export const SideBar = ({ openProjects = new Set() }) => {
               </div>
             ))}
         </div>
-        <div className="w-full flex flex-col items-start p-3">
-          <div className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer">
-            <Icons.Grid className="p-2.5 w-10 h-10"></Icons.Grid>
-            <p className="text-base">GPT</p>
-          </div>
-        </div>
+
         <div className="w-full flex flex-col items-start p-3">
           <p className="text-gray-400 m-2 text-base">어제</p>
           {[...chatList]
@@ -168,9 +168,7 @@ export const SideBar = ({ openProjects = new Set() }) => {
                 key={chat.id}
                 chat={chat}
                 isActive={currentChat?.id === chat.id}
-                isKebabOpen={
-                  kebabOpen?.type === "chat" && kebabOpen?.id === chat.id
-                }
+                kebabOpen={kebabOpen}
                 setKebabOpen={setKebabOpen}
               />
             ))}

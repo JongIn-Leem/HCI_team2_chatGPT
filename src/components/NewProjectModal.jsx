@@ -59,6 +59,11 @@ export const NewProjectModal = ({ onClose }) => {
           value={projectName}
           autoFocus
           onChange={(e) => setProjectName(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && projectName.trim()) {
+              handleCreateProject();
+            }
+          }}
           className="w-full h-10 p-4 mb-5 text-lg rounded-lg focus:outline-black focus:outline-3"
         />
         <div className="w-full py-2 mb-7 bg-gray-100 rounded-lg flex justify-between items-center">
@@ -78,7 +83,7 @@ export const NewProjectModal = ({ onClose }) => {
         </div>
         <div className="w-full flex justify-end items-center">
           <div
-            className="px-4 py-2 mr-3 border-1 border-gray-200 hover:bg-gray-200 cursor-pointer rounded-full flex justify-center items-center"
+            className="px-4 py-2 mr-3 border-1 border-gray-300 hover:bg-gray-200 cursor-pointer rounded-full flex justify-center items-center"
             onClick={() => onClose()}
           >
             <p className="font-semibold">취소</p>
@@ -91,7 +96,11 @@ export const NewProjectModal = ({ onClose }) => {
                 "cursor-not-allowed bg-gray-500": !projectName.trim(),
               }
             )}
-            onClick={handleCreateProject}
+            onClick={() => {
+              if (projectName.trim()) {
+                handleCreateProject();
+              }
+            }}
           >
             <p className="font-semibold text-white">프로젝트 만들기</p>
           </div>

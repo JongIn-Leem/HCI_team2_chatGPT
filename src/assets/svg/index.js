@@ -34,6 +34,13 @@ import SpeechBalloons from "./speech_balloons.svg?react";
 import NewFile from "./new_file.svg?react";
 import Pen from "./pen.svg?react";
 import Bulb from "./bulb.svg?react";
+import Play from "./play.svg?react";
+import Undo from "./undo.svg?react";
+import FolderBox from "./folder_box.svg?react";
+import Bin from "./bin.svg?react";
+import Draw from "./draw.svg?react";
+import Web from "./web.svg?react";
+import DeepResearch from "./deep_research.svg?react";
 
 export {
   SideBar,
@@ -72,4 +79,11 @@ export {
   NewFile,
   Pen,
   Bulb,
+  Play,
+  Undo,
+  FolderBox,
+  Bin,
+  Draw,
+  Web,
+  DeepResearch,
 };
