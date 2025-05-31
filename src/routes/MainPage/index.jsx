@@ -51,14 +51,14 @@ export default function MainPage() {
   }, [isResponding]);
 
   useEffect(() => {
-    if (!currentChat) return;
-    if (!currentChat.project) return;
+    if (!currentChat?.project) return;
+
     setOpenProjects((prev) => {
       const newSet = new Set(prev);
       newSet.add(currentChat.project);
       return newSet;
     });
-  }, [currentChat]);
+  }, [currentChat?.project]);
 
   return (
     <div className="flex h-screen">

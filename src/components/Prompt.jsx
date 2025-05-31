@@ -14,8 +14,14 @@ export const Prompt = ({
 }) => {
   const [text, setText] = useState("");
   const [showArrow, setShowArrow] = useState(false);
-  const { setChatList, currentChat, setCurrentChat, currentProject } =
-    useChatting();
+  const {
+    setChatList,
+    currentChat,
+    setCurrentChat,
+    projectList,
+    currentProject,
+    setCurrentProject,
+  } = useChatting();
   const isComposingRef = useRef(false);
   const textareaRef = useRef(null);
 
@@ -104,13 +110,14 @@ export const Prompt = ({
         titleText.length > 25 ? titleText.slice(0, 25) + ".." : titleText;
       const newChat = {
         id: Date.now(),
+        project: currentProject?.id ?? null,
         title,
         updatedAt: Date.now(),
         messages: [newMessage],
       };
 
       setChatList((prevList) => [newChat, ...prevList]);
-      setCurrentChat(newChat);
+      setCurrentChat({ ...newChat });
     }
 
     setText("");

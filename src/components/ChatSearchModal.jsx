@@ -55,13 +55,17 @@ export const ChatSearchModal = ({ onClose }) => {
         ref={modalRef}
         className="w-180 h-120 flex flex-col items-center justify-start border-1 border-gray-300 bg-white rounded-xl shadow-xl"
       >
-        <div className="w-full p-4 flex items-center">
+        <div className="w-full p-4 flex justify-between items-center">
           <input
             type="text"
             placeholder="채팅 검색..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full p-2 focus:outline-none text-base rounded-md"
+            className="w-150 p-2 focus:outline-none text-base rounded-md"
+          />
+          <Icons.Close
+            className="p-2.5 w-10 h-10 text-gray-400 rounded-full hover:bg-gray-200 hover:text-black"
+            onClick={() => onClose()}
           />
         </div>
         <hr className="text-gray-300 w-full"></hr>
