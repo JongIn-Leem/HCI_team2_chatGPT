@@ -5,6 +5,7 @@ import {
   ChattingPage,
   NewChattingPage,
   ProjectDetailPage,
+  GPTPage,
 } from "@/components";
 import { useSideBar, useChatting } from "@/contexts";
 import { randomResponse } from "@/data/RandomResponse";
@@ -31,6 +32,7 @@ export default function MainPage() {
     setBottomPadding(200);
   }, [currentChat?.id]);
 
+  const [isGPT, setIsGPT] = useState(false);
   const [isResponding, setIsResponding] = useState(false);
   const [pendingResponse, setPendingResponse] = useState(null);
   const [responseThumbs, setResponseThumbs] = useState({});
@@ -67,7 +69,9 @@ export default function MainPage() {
           isSideBarOpen ? "w-64" : "w-0"
         }`}
       >
-        {isSideBarOpen && <SideBar openProjects={openProjects} />}
+        {isSideBarOpen && (
+          <SideBar openProjects={openProjects} setIsGPT={setIsGPT} />
+        )}
       </div>
       <div className="flex-1 flex flex-col justify-start items-center transition-transform duration-300">
         {shouldShowHeader && <Header />}
@@ -85,7 +89,8 @@ export default function MainPage() {
             setResponseThumbs={setResponseThumbs}
           />
         )}
-        {!currentChat && !currentProject && (
+        {!currentChat && !currentProject && isGPT && <GPTPage />}
+        {!currentChat && !currentProject && !isGPT && (
           <NewChattingPage
             chatRef={chatRef}
             setBottomPadding={setBottomPadding}
