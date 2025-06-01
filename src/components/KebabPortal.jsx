@@ -101,7 +101,7 @@ export const KebabPortal = ({
                 <p>공유하기</p>
               </div>
               <div
-                className="w-full px-2 py-1.5 flex items-center rounded-xl hover:bg-gray-100 cursor-pointer"
+                className="w-full px-2 py-1.5 flex justify-between items-center rounded-xl hover:bg-gray-100 cursor-pointer"
                 onMouseEnter={() => {
                   clearTimeout(closeTimerRef.current);
                   setProjectMenuPos?.({
@@ -115,8 +115,11 @@ export const KebabPortal = ({
                   }, 200);
                 }}
               >
-                <Icons.Folder className="w-5 h-5 mr-2" />
-                <p>프로젝트에 추가</p>
+                <div className="flex items-center">
+                  <Icons.Folder className="w-5 h-5 mr-2" />
+                  <p>프로젝트에 추가</p>
+                </div>
+                <Icons.ArrowRight className="w-4 h-4"></Icons.ArrowRight>
               </div>
             </>
           )}
@@ -127,7 +130,7 @@ export const KebabPortal = ({
           {project && (
             <>
               <div
-                className="w-full px-2 py-1.5 flex items-center rounded-xl hover:bg-gray-100 cursor-pointer"
+                className="w-full px-2 py-1.5 flex justify-between items-center rounded-xl hover:bg-gray-100 cursor-pointer"
                 onMouseEnter={() => {
                   clearTimeout(closeTimerRef.current);
                   setProjectMenuPos?.({
@@ -141,8 +144,11 @@ export const KebabPortal = ({
                   }, 200);
                 }}
               >
-                <Icons.Folder className="w-5 h-5 mr-2" />
-                <p>프로젝트로 이동</p>
+                <div className="flex items-center">
+                  <Icons.Folder className="w-5 h-5 mr-2" />
+                  <p>프로젝트로 이동</p>
+                </div>
+                <Icons.ArrowRight className="w-4 h-4"></Icons.ArrowRight>
               </div>
               <div
                 className="w-full px-2 py-1.5 flex items-center rounded-xl hover:bg-gray-100 cursor-pointer"
