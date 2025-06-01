@@ -7,8 +7,10 @@ import {
   NewProjectModal,
 } from "@/components";
 import { useState, useEffect } from "react";
+import Wolfram from "@/assets/wolfram";
+import Canva from "@/assets/Canva";
 
-export const SideBar = ({ openProjects = new Set() }) => {
+export const SideBar = ({ openProjects = new Set(), setIsGPT }) => {
   const { sideBarToggle } = useSideBar();
   const {
     chatList,
@@ -127,12 +129,23 @@ export const SideBar = ({ openProjects = new Set() }) => {
         </div>
         <div className="w-full flex flex-col items-start p-3">
           <div className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer">
+            <Icons.Play className="p-2.5 w-10 h-10"></Icons.Play>
+            <p className="text-base">Sora</p>
+          </div>
+          <div
+            className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer"
+            onClick={() => setIsGPT(true)}
+          >
             <Icons.Grid className="p-2.5 w-10 h-10"></Icons.Grid>
             <p className="text-base">GPT</p>
           </div>
+          <div className="w-full h-10 flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer">
+            <Wolfram className="w-5 h-5 mx-2.5 rounded-full"></Wolfram>
+            <p className="text-base">Wolfram</p>
+          </div>
           <div className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer">
-            <Icons.Play className="p-2.5 w-10 h-10"></Icons.Play>
-            <p className="text-base">Sora</p>
+            <Canva className="p-2.5 w-10 h-10"></Canva>
+            <p className="text-base">Canva</p>
           </div>
         </div>
         <div className="w-full flex flex-col items-start p-3">

@@ -15,3 +15,4 @@ export * from "./PromptButtons";
 export * from "./FilterPortal";
 export * from "./ChatSearchModal";
 export * from "./NewProjectModal";
+export * from "./GPTPage";
