@@ -10,8 +10,8 @@ import { useState, useEffect } from "react";
 import Wolfram from "@/assets/wolfram";
 import Canva from "@/assets/Canva";
 
-export const SideBar = ({ openProjects = new Set(), setIsGPT }) => {
-  const { sideBarToggle } = useSideBar();
+export const SideBar = ({ isOpen, openProjects = new Set(), setIsGPT }) => {
+  const { sideBarToggle, subSideBarToggle } = useSideBar();
   const {
     chatList,
     currentChat,
@@ -34,74 +34,35 @@ export const SideBar = ({ openProjects = new Set(), setIsGPT }) => {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // 컴포넌트 내부 어딘가 (return 바깥)
-  const renderChattingBoxes = (project) => {
-    const chatsForProject = [...chatList]
-      .filter((chat) => chat.project === project.id)
-      .sort((a, b) => b.updatedAt - a.updatedAt);
-
-    const top5Chats = chatsForProject.slice(0, 5);
-    const hasMoreThanFive = chatsForProject.length > 5;
-    const isCurrentChatInTop5 = top5Chats.some(
-      (chat) => chat.id === currentChat?.id
-    );
-
-    let displayedChats = top5Chats;
-
-    // 현재 채팅이 top5에 없으면 마지막 하나를 빼고 currentChat 추가
-    if (
-      currentChat &&
-      currentChat.project === project.id &&
-      !isCurrentChatInTop5
-    ) {
-      const currentChatFull = chatsForProject.find(
-        (chat) => chat.id === currentChat.id
-      );
-      if (currentChatFull) {
-        displayedChats = [...top5Chats.slice(0, 4), currentChatFull];
-      }
-    }
-
-    return (
-      <>
-        {displayedChats.map((chat) => (
-          <ChattingBox
-            key={chat.id}
-            chat={chat}
-            isActive={currentChat?.id === chat.id}
-            kebabOpen={kebabOpen}
-            setKebabOpen={setKebabOpen}
-          />
-        ))}
-        {hasMoreThanFive && (
-          <div
-            className="flex justify-start items-center p-2 px-10 w-full rounded-lg cursor-pointer hover:bg-gray-200"
-            onClick={() => {
-              setCurrentChat(null);
-              setCurrentProject(project);
-            }}
-          >
-            모두 보기
-          </div>
-        )}
-      </>
-    );
-  };
-
   return (
-    <div className="fixed top-0 left-0 z-30 w-64 h-screen flex flex-col bg-gray-100 border-r border-gray-300 transition-transform duration-300 overflow-visible">
+    <div
+      className={`fixed top-0 z-30 w-64 h-screen flex flex-col bg-gray-100 border-r border-gray-300 
+    transition-transform duration-300 ease-in-out
+    ${isOpen ? "translate-x-0" : "-translate-x-full"}
+  `}
+    >
       <div className="w-full p-2 border-b border-gray-300 flex items-center justify-between">
-        <Icons.ChatGPTLogo
-          className="p-2 w-10 h-10 rounded-md cursor-pointer hover:bg-gray-200"
-          onClick={() => {
-            setCurrentChat(null);
-            setCurrentProject(null);
-          }}
-        />
         <Icons.SideBar
           className={`p-2 w-10 h-10 text-gray-400 rounded-md cursor-pointer hover:bg-gray-200 `}
-          onClick={sideBarToggle}
+          onClick={() => sideBarToggle()}
         />
+        <div className="flex items-center">
+          <div
+            className="w-full flex items-center rounded-lg hover:bg-gray-200 cursor-pointer"
+            onClick={() => setIsChatSearchOpen(true)}
+          >
+            <Icons.Search className="p-2 w-10 h-10"></Icons.Search>
+          </div>
+          <div
+            className="w-full flex items-center rounded-lg hover:bg-gray-200 cursor-pointer"
+            onClick={() => {
+              setCurrentChat(null);
+              setCurrentProject(null);
+            }}
+          >
+            <Icons.NewChat className="p-2 w-10 h-10"></Icons.NewChat>
+          </div>
+        </div>
       </div>
       <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col items-start">
         <div className="w-full flex flex-col items-start p-3">
@@ -112,26 +73,11 @@ export const SideBar = ({ openProjects = new Set(), setIsGPT }) => {
               setCurrentProject(null);
             }}
           >
-            <Icons.NewChat className="p-2.5 w-10 h-10"></Icons.NewChat>
-            <p className="text-base">새 채팅</p>
-          </div>
-          <div
-            className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer"
-            onClick={() => setIsChatSearchOpen(true)}
-          >
-            <Icons.Search className="p-2.5 w-10 h-10"></Icons.Search>
-            <p className="text-base">채팅 검색</p>
-          </div>
-          <div className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer">
-            <Icons.Library className="p-2.75 w-10 h-10"></Icons.Library>
-            <p className="text-base">라이브러리</p>
+            <Icons.ChatGPTLogo className="p-2.5 w-10 h-10"></Icons.ChatGPTLogo>
+            <p className="text-base">ChatGPT</p>
           </div>
         </div>
         <div className="w-full flex flex-col items-start p-3">
-          <div className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer">
-            <Icons.Play className="p-2.5 w-10 h-10"></Icons.Play>
-            <p className="text-base">Sora</p>
-          </div>
           <div
             className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer"
             onClick={() => setIsGPT(true)}
@@ -150,25 +96,29 @@ export const SideBar = ({ openProjects = new Set(), setIsGPT }) => {
         </div>
         <div className="w-full flex flex-col items-start p-3">
           <div
-            className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer"
-            onClick={() => setIsNewProjectOpen(true)}
+            className="w-full flex justify-between items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer"
+            onClick={() => {
+              subSideBarToggle("project");
+            }}
           >
-            <Icons.NewFolder className="p-2.5 w-10 h-10"></Icons.NewFolder>
-            <p className="text-base">새 프로젝트</p>
+            <div className="flex items-center">
+              <Icons.Folder className="p-2.5 w-10 h-10"></Icons.Folder>
+              <p className="text-base">프로젝트</p>
+            </div>
+            <Icons.ArrowRight className="w-4 h-4"></Icons.ArrowRight>
           </div>
-          {projectList
-            .sort((a, b) => b.createdAt - a.createdAt)
-            .map((project) => (
-              <div className="w-full" key={project.id}>
-                <ProjectBox
-                  project={project}
-                  kebabOpen={kebabOpen}
-                  setKebabOpen={setKebabOpen}
-                  isOpen={openProjects.has(project.id)}
-                />
-                {openProjects.has(project.id) && renderChattingBoxes(project)}
-              </div>
-            ))}
+          <div
+            className="w-full flex justify-between items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer"
+            onClick={() => {
+              subSideBarToggle("bookmark");
+            }}
+          >
+            <div className="flex items-center">
+              <Icons.Keep className="p-2.5 w-10 h-10"></Icons.Keep>
+              <p className="text-base">북마크</p>
+            </div>
+            <Icons.ArrowRight className="w-4 h-4"></Icons.ArrowRight>
+          </div>
         </div>
 
         <div className="w-full flex flex-col items-start p-3">

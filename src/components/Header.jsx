@@ -4,7 +4,7 @@ import { useSideBar } from "@/contexts";
 import { useChatting } from "@/contexts/ChattingContext";
 
 export const Header = () => {
-  const { isSideBarOpen, sideBarToggle } = useSideBar();
+  const { isSideBarOpen, sideBarToggle, isSubSideBarOpen } = useSideBar();
   const [showIcon, setShowIcon] = useState(true);
   const { currentChat, setCurrentChat, currentProject, setCurrentProject } =
     useChatting();
@@ -20,9 +20,12 @@ export const Header = () => {
 
   return (
     <div
-      className={`fixed top-0 z-10 bg-white transition-all duration-300  ${
-        isSideBarOpen ? "left-64 w-[calc(100%-16rem)]" : "left-0 w-full"
-      } ${!currentChat && currentProject ? "" : "border-b border-gray-300"}`}
+      className={`fixed top-0 z-10 bg-white transition-all duration-300 
+        ${isSideBarOpen && isSubSideBarOpen && "left-128 w-[calc(100%-32rem)] "}
+        ${isSideBarOpen && !isSubSideBarOpen && "left-64 w-[calc(100%-16rem)] "}
+        ${!isSideBarOpen && isSubSideBarOpen && "left-64 w-[calc(100%-16rem)] "}
+        ${!isSideBarOpen && !isSubSideBarOpen && "left-0 w-full "}
+        ${!currentChat && currentProject ? "" : "border-b border-gray-300"}`}
     >
       <div className="flex items-center justify-between p-2">
         <div className={`flex `}>

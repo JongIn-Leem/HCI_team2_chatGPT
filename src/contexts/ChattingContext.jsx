@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { chatList as initialChatList } from "@/data/chatData";
 import { projectList as initialProjectList } from "@/data/projectData";
+import { bookmarkList as initialBookmarkList } from "@/data/bookmarkData";
 
 const DEFAULT_CONTEXT_VALUE = {
   currentChat: null,
@@ -14,6 +15,7 @@ const ChattingProvider = ({ children }) => {
   const [currentChat, setCurrentChat] = useState(null);
   const [projectList, setProjectList] = useState(initialProjectList);
   const [currentProject, setCurrentProject] = useState(null);
+  const [bookmarkList, setBookmarkList] = useState(initialBookmarkList);
 
   return (
     <ChattingContext.Provider
@@ -26,6 +28,8 @@ const ChattingProvider = ({ children }) => {
         setProjectList,
         currentProject,
         setCurrentProject,
+        bookmarkList,
+        setBookmarkList,
       }}
     >
       {children}
@@ -43,6 +47,8 @@ const useChatting = () => {
     setCurrentProject,
     projectList,
     setProjectList,
+    bookmarkList,
+    setBookmarkList,
   } = useContext(ChattingContext);
   if (!setCurrentChat || !setChatList) {
     throw new Error("useChatting must be used within a ChattingProvider");
@@ -57,6 +63,8 @@ const useChatting = () => {
     setCurrentProject,
     projectList,
     setProjectList,
+    bookmarkList,
+    setBookmarkList,
   };
 };
 

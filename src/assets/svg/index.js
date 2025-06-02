@@ -41,6 +41,9 @@ import Bin from "./bin.svg?react";
 import Draw from "./draw.svg?react";
 import Web from "./web.svg?react";
 import DeepResearch from "./deep_research.svg?react";
+import Keep from "./keep.svg?react";
+import KeepFill from "./keep_fill.svg?react";
+import DoubleArrowLeft from "./double_arrow_left.svg?react";
 
 export {
   SideBar,
@@ -86,4 +89,7 @@ export {
   Draw,
   Web,
   DeepResearch,
+  Keep,
+  KeepFill,
+  DoubleArrowLeft,
 };
