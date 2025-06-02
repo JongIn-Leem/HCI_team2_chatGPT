@@ -11,6 +11,7 @@ export const Prompt = ({
   setIsResponding,
   responseInterruptRef,
   onSendStartTransition,
+  setIsGPT,
 }) => {
   const [text, setText] = useState("");
   const [showArrow, setShowArrow] = useState(false);
@@ -183,6 +184,7 @@ export const Prompt = ({
           setIsResponding={setIsResponding}
           handleSend={handleSend}
           responseInterruptRef={responseInterruptRef}
+          setIsGPT={setIsGPT}
         ></PromptButtons>
       </div>
     </div>

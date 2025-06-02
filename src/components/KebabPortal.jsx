@@ -106,7 +106,7 @@ export const KebabPortal = ({
                 onMouseEnter={() => {
                   clearTimeout(closeTimerRef.current);
                   setProjectMenuPos?.({
-                    top: kebabPos.top - 170,
+                    top: kebabPos.top + 40,
                     left: kebabPos.left + 180,
                   });
                 }}
@@ -210,10 +210,7 @@ export const KebabPortal = ({
           ref={kebabRef}
           style={{ top: `${kebabPos.top}px`, left: `${kebabPos.left}px` }}
           className={classNames(
-            "fixed w-50 bg-white border border-gray-300 shadow-lg rounded-2xl z-50",
-            {
-              "-translate-y-full": kebabOpen.type === "chat" && !chat?.project,
-            }
+            "fixed w-50 bg-white border border-gray-300 shadow-lg rounded-2xl z-50"
           )}
         >
           <div className="w-full p-2 flex flex-col items-center">

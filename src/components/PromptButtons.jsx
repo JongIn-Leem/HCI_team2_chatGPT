@@ -3,12 +3,15 @@ import * as Icons from "@/assets/svg";
 import { FilterPortal } from "@/components";
 import { useChatting } from "@/contexts/";
 import classNames from "classnames";
+import Wolfram from "@/assets/wolfram";
+import Canva from "@/assets/Canva";
 
 export const PromptButtons = ({
   isTyping,
   isResponding,
   handleSend,
   responseInterruptRef,
+  setIsGPT,
 }) => {
   const { currentChat } = useChatting();
   const [hoveredId, setHoveredId] = useState(null);
@@ -26,15 +29,10 @@ export const PromptButtons = ({
 
     const rect = filterButtonRef.current.getBoundingClientRect();
     setFilterPos({
-      top: rect.top + window.scrollY + (currentChat ? -215 : 40),
+      top: rect.top + window.scrollY + (currentChat ? -252 : 40),
       left: rect.left + window.scrollX - 15,
     });
     setIsFilterOpen(true);
-  };
-
-  const clearFilter = () => {
-    setSelectedFilter(null);
-    setIsFilterOpen(false);
   };
 
   useEffect(() => {
@@ -54,23 +52,33 @@ export const PromptButtons = ({
   const filterOptions = [
     {
       id: "draw",
-      label: "이미지",
-      icon: <Icons.Draw className="mr-1 w-5 h-5 text-blue-500" />,
+      label: "이미지 그리기",
+      icon: <Icons.Draw className="mr-2 w-5 h-5 text-blue-500" />,
     },
     {
       id: "web",
-      label: "검색",
-      icon: <Icons.Web className="mr-1 w-5 h-5 text-blue-500" />,
+      label: "웹에서 검색하기",
+      icon: <Icons.Web className="mr-2 w-5 h-5 text-blue-500" />,
     },
     {
       id: "edit",
-      label: "캔버스",
-      icon: <Icons.Edit className="mr-1 w-5 h-5 text-blue-500" />,
+      label: "글쓰기 및 코딩",
+      icon: <Icons.Edit className="mr-2 w-5 h-5 text-blue-500" />,
     },
     {
       id: "research",
-      label: "리서치",
-      icon: <Icons.DeepResearch className="mr-1 w-5 h-5 text-blue-500" />,
+      label: "심층 리서치",
+      icon: <Icons.DeepResearch className="mr-2 w-5 h-5 text-blue-500" />,
+    },
+    {
+      id: "Wolfram",
+      label: "Wolfram",
+      icon: <Wolfram className="mr-2 w-5 h-5" />,
+    },
+    {
+      id: "Canva",
+      label: "Canva",
+      icon: <Canva className="mr-2 w-5 h-5" />,
     },
   ];
 
@@ -102,27 +110,21 @@ export const PromptButtons = ({
           onMouseLeave={() => setHoveredId(null)}
           onClick={handleFilterClick}
         >
-          <Icons.Filter className="p-2.5 w-10 h-10" />
+          {!selectedFilter && <Icons.Filter className="p-2.5 w-10 h-10" />}
           {!selectedFilter && <p className="text-m pr-3">도구</p>}
-          {!isFilterOpen && selectedFilter && hoveredId === "filter" && (
-            <div className="absolute top-full translate-y-1.5 left-1/2 -translate-x-1/2 mt-1 px-2 py-1 text-sm font-semibold text-white bg-black rounded-md shadow-md whitespace-nowrap z-50">
-              도구 선택하기
-            </div>
-          )}
         </div>
-        {selectedFilter && <p className="text-gray-200 ml-0.5 mr-1">|</p>}
         {selectedFilter && (
           <div
             className="h-10 px-2 py-1 rounded-full hover:bg-blue-50 flex items-center cursor-pointer"
-            onClick={clearFilter}
-            onMouseEnter={() => setHoveredId("clearFilter")}
+            onMouseEnter={() => setHoveredId("filter")}
             onMouseLeave={() => setHoveredId(null)}
+            onClick={handleFilterClick}
           >
             {filterOptions.find((opt) => opt.id === selectedFilter)?.icon}
             <p className="text-[0.9rem] text-blue-500 mr-1">
               {filterOptions.find((opt) => opt.id === selectedFilter)?.label}
             </p>
-            <Icons.Close className="w-4 h-4 text-blue-400" />
+            <Icons.ArrowDown className="text-blue-500 w-5 h-5" />
           </div>
         )}
       </div>
@@ -173,14 +175,16 @@ export const PromptButtons = ({
         )}
       </div>
 
-      <FilterPortal
-        isOpen={isFilterOpen}
-        setIsFilterOpen={setIsFilterOpen}
-        filterRef={filterRef}
-        filterPos={filterPos}
-        setSelectedFilter={setSelectedFilter}
-        selectedFilter={selectedFilter}
-      />
+      {isFilterOpen && (
+        <FilterPortal
+          setIsFilterOpen={setIsFilterOpen}
+          filterRef={filterRef}
+          filterPos={filterPos}
+          setSelectedFilter={setSelectedFilter}
+          selectedFilter={selectedFilter}
+          setIsGPT={setIsGPT}
+        />
+      )}
     </div>
   );
 };

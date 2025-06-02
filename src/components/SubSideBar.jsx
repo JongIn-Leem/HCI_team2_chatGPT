@@ -15,7 +15,7 @@ export const SubSideBar = ({
   setOpenProjects,
   chatRef,
 }) => {
-  const { isSubSideBarOpen, subSideBarToggle } = useSideBar();
+  const { subSideBarOpen, subSideBarToggle } = useSideBar();
   const {
     chatList,
     currentChat,
@@ -135,10 +135,10 @@ export const SubSideBar = ({
     >
       <div className="w-full p-2 border-b border-gray-300 flex items-center justify-between">
         <p className="pl-2 text-lg font-bold">
-          {isSubSideBarOpen === "project" ? "프로젝트" : "북마크"}
+          {subSideBarOpen === "project" ? "프로젝트" : "북마크"}
         </p>
         <div className="flex items-center">
-          {isSubSideBarOpen === "project" && (
+          {subSideBarOpen === "project" && (
             <div
               className="flex items-center rounded-lg hover:bg-gray-200 cursor-pointer"
               onClick={() => setIsNewProjectOpen(true)}
@@ -148,12 +148,12 @@ export const SubSideBar = ({
           )}
           <Icons.DoubleArrowLeft
             className="p-2 w-10 h-10 rounded-lg cursor-pointer hover:bg-gray-200"
-            onClick={subSideBarToggle}
+            onClick={() => subSideBarToggle(null)}
           />
         </div>
       </div>
 
-      {isSubSideBarOpen === "project" ? (
+      {subSideBarOpen === "project" ? (
         <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col items-start">
           <div className="w-full flex flex-col items-start p-3">
             {projectList

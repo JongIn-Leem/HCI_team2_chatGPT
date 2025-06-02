@@ -8,6 +8,7 @@ export const NewChattingPage = ({
   isResponding,
   setIsResponding,
   responseInterruptRef,
+  setIsGPT,
 }) => {
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -44,6 +45,7 @@ export const NewChattingPage = ({
           setIsResponding={setIsResponding}
           responseInterruptRef={responseInterruptRef}
           onSendStartTransition={handleStartTransition}
+          setIsGPT={setIsGPT}
         />
       </div>
     </div>

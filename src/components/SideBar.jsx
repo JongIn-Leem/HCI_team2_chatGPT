@@ -12,13 +12,8 @@ import Canva from "@/assets/Canva";
 
 export const SideBar = ({ isOpen, openProjects = new Set(), setIsGPT }) => {
   const { sideBarToggle, subSideBarToggle } = useSideBar();
-  const {
-    chatList,
-    currentChat,
-    setCurrentChat,
-    projectList,
-    setCurrentProject,
-  } = useChatting();
+  const { chatList, currentChat, setCurrentChat, setCurrentProject } =
+    useChatting();
   const [kebabOpen, setKebabOpen] = useState(null);
   const [isChatSearchOpen, setIsChatSearchOpen] = useState(false);
   const [isNewProjectOpen, setIsNewProjectOpen] = useState(false);
@@ -58,6 +53,7 @@ export const SideBar = ({ isOpen, openProjects = new Set(), setIsGPT }) => {
             onClick={() => {
               setCurrentChat(null);
               setCurrentProject(null);
+              setIsGPT(false);
             }}
           >
             <Icons.NewChat className="p-2 w-10 h-10"></Icons.NewChat>
@@ -71,27 +67,11 @@ export const SideBar = ({ isOpen, openProjects = new Set(), setIsGPT }) => {
             onClick={() => {
               setCurrentChat(null);
               setCurrentProject(null);
+              setIsGPT(false);
             }}
           >
             <Icons.ChatGPTLogo className="p-2.5 w-10 h-10"></Icons.ChatGPTLogo>
             <p className="text-base">ChatGPT</p>
-          </div>
-        </div>
-        <div className="w-full flex flex-col items-start p-3">
-          <div
-            className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer"
-            onClick={() => setIsGPT(true)}
-          >
-            <Icons.Grid className="p-2.5 w-10 h-10"></Icons.Grid>
-            <p className="text-base">GPT</p>
-          </div>
-          <div className="w-full h-10 flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer">
-            <Wolfram className="w-5 h-5 mx-2.5 rounded-full"></Wolfram>
-            <p className="text-base">Wolfram</p>
-          </div>
-          <div className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer">
-            <Canva className="p-2.5 w-10 h-10"></Canva>
-            <p className="text-base">Canva</p>
           </div>
         </div>
         <div className="w-full flex flex-col items-start p-3">

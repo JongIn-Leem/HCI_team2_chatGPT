@@ -42,6 +42,14 @@
   --radius: 0.6rem;
 }
 
+@font-face {
+  font-family: "Pretendard";
+  src: url("/HCI_team2_chatGPT/fonts/PretendardVariable.woff2") format("woff2");
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   margin: 0;
   min-width: 320px;

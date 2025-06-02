@@ -21,7 +21,7 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/HCI_team2_chatGPT/improved_page/">
       <AppContent />
     </BrowserRouter>
   );
