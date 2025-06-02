@@ -5,6 +5,7 @@ import { useChatting } from "@/contexts/";
 import classNames from "classnames";
 import Wolfram from "@/assets/wolfram";
 import Canva from "@/assets/Canva";
+import Scholar from "@/assets/Scholar";
 
 export const PromptButtons = ({
   isTyping,
@@ -79,6 +80,11 @@ export const PromptButtons = ({
       id: "Canva",
       label: "Canva",
       icon: <Canva className="mr-2 w-5 h-5" />,
+    },
+    {
+      id: "Scholar",
+      label: "Scholar",
+      icon: <Scholar className="mr-2 w-5 h-5" />,
     },
   ];
 

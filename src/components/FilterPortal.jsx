@@ -4,6 +4,7 @@ import * as Icons from "@/assets/svg";
 import { useChatting } from "@/contexts";
 import Wolfram from "@/assets/wolfram";
 import Canva from "@/assets/Canva";
+import Scholar from "@/assets/Scholar";
 
 export const FilterPortal = ({
   setIsFilterOpen,
@@ -113,6 +114,24 @@ export const FilterPortal = ({
             </p>
           </div>
           {selectedFilter === "Canva" && (
+            <Icons.Check className="w-3 h-3 text-blue-500" />
+          )}
+        </div>
+        <div
+          onMouseDown={(e) => {
+            e.stopPropagation();
+            handleSelect("Scholar");
+            setIsGPTOpen(null);
+          }}
+          className={`p-1 h-10 flex justify-between items-center rounded-xl hover:bg-gray-100 cursor-pointer`}
+        >
+          <div className="flex items-center">
+            <Scholar className="p-2.5 w-10 h-10"></Scholar>
+            <p className={selectedFilter === "Scholar" ? "text-blue-500" : ""}>
+              Scholar
+            </p>
+          </div>
+          {selectedFilter === "Scholar" && (
             <Icons.Check className="w-3 h-3 text-blue-500" />
           )}
         </div>
