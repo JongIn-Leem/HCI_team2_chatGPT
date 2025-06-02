@@ -144,9 +144,16 @@ export const Prompt = ({
 
   const handleSend = () => {
     const trimmedText = text.trim();
+    if (!trimmedText) return;
+
     const newMessage = { role: "user", content: trimmedText };
 
-    if (!selectedProject && currentChat) {
+    const isSameProject =
+      selectedProject &&
+      currentProject &&
+      selectedProject.id === currentProject.id;
+
+    if (isSameProject && currentChat) {
       setChatList((prevList) =>
         prevList.map((chat) =>
           chat.id === currentChat.id
@@ -165,6 +172,7 @@ export const Prompt = ({
       const titleText = newMessage.content;
       const title =
         titleText.length > 25 ? titleText.slice(0, 25) + ".." : titleText;
+
       const newChat = {
         id: Date.now(),
         project: selectedProject?.id ?? null,
@@ -175,6 +183,16 @@ export const Prompt = ({
 
       setChatList((prevList) => [newChat, ...prevList]);
       setCurrentChat({ ...newChat });
+
+      // 프로젝트 선택이 되어 있으면 currentProject도 동기화
+      if (selectedProject) {
+        setCurrentProject(
+          projectList.find((project) => project.id === selectedProject.id) ??
+            null
+        );
+      } else {
+        setCurrentProject(null);
+      }
     }
 
     setText("");

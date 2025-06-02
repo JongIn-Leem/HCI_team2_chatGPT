@@ -50,7 +50,12 @@ export const Header = () => {
           {currentChat && currentProject ? (
             <>
               <div className="flex items-center justify-start h-10">
-                <p className="text-xl font-bold p-2 px-4 text-gray-600 rounded-xl cursor-pointer hover:bg-gray-100">
+                <p
+                  className="text-xl font-bold p-2 px-4 text-gray-600 rounded-xl cursor-pointer hover:bg-gray-100"
+                  onClick={() => {
+                    setCurrentChat(null);
+                  }}
+                >
                   {currentProject.title}
                 </p>
               </div>
