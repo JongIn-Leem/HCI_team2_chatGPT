@@ -4,21 +4,20 @@ import { useChatting } from "@/contexts";
 import classNames from "classnames";
 import ReactDOM from "react-dom";
 
-export const NewProjectModal = ({ onClose }) => {
+export const NewBookmarkModal = ({ onClose, mid }) => {
   const isComposingRef = useRef(false);
   const isCreatingRef = useRef(false);
   const modalRef = useRef(null);
   const inputRef = useRef(null);
 
-  const { setCurrentChat, setCurrentProject, setProjectList, projectList } =
-    useChatting();
+  const { currentChat, bookmarkList, setBookmarkList } = useChatting();
 
-  const projectListRef = useRef(projectList);
+  const bookmarkListRef = useRef(bookmarkList);
   useEffect(() => {
-    projectListRef.current = projectList;
-  }, [projectList]);
+    bookmarkListRef.current = bookmarkList;
+  }, [bookmarkList]);
 
-  const [projectName, setProjectName] = useState("");
+  const [bookmarkName, setBookmarkName] = useState("");
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -30,34 +29,33 @@ export const NewProjectModal = ({ onClose }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [onClose]);
 
-  const handleCreateProject = () => {
+  const handleCreateBookmark = () => {
     if (isCreatingRef.current) return;
     isCreatingRef.current = true;
 
-    const trimmedName = projectName.trim();
+    const trimmedName = bookmarkName.trim();
     if (!trimmedName) return;
 
-    const isDuplicate = projectListRef.current.some(
+    const isDuplicate = bookmarkListRef.current.some(
       (p) => p.title === trimmedName
     );
     if (isDuplicate) {
-      alert("이미 같은 이름의 프로젝트가 있어요.");
+      alert("이미 같은 이름의 북마크가 있어요.");
       isCreatingRef.current = false;
       return;
     }
 
-    const newProject = {
+    const newBookmark = {
       id: Date.now(),
       title: trimmedName,
       createdAt: Date.now(),
+      cid: currentChat.id,
+      mid: mid,
     };
 
-    setProjectList([...projectListRef.current, newProject]);
-    setCurrentProject(newProject);
-    setCurrentChat(null);
+    setBookmarkList([...bookmarkListRef.current, newBookmark]);
     onClose();
 
-    // 잠금 해제
     setTimeout(() => {
       isCreatingRef.current = false;
     }, 300);
@@ -72,7 +70,7 @@ export const NewProjectModal = ({ onClose }) => {
         className="w-140 h-80 p-4 px-6 flex flex-col items-center justify-start border border-gray-300 bg-white rounded-xl shadow-xl"
       >
         <div className="w-full mb-7 flex justify-between items-center">
-          <p className="text-xl font-semibold">프로젝트 이름</p>
+          <p className="text-xl font-semibold">북마크 이름</p>
           <Icons.Close
             className="p-2.5 w-10 h-10 rounded-full hover:bg-gray-200"
             onClick={onClose}
@@ -81,10 +79,10 @@ export const NewProjectModal = ({ onClose }) => {
         <input
           type="text"
           placeholder="예: 생일 파티 계획"
-          value={projectName}
+          value={bookmarkName}
           autoFocus
           ref={inputRef}
-          onChange={(e) => setProjectName(e.target.value)}
+          onChange={(e) => setBookmarkName(e.target.value)}
           onCompositionStart={() => {
             isComposingRef.current = true;
           }}
@@ -95,7 +93,7 @@ export const NewProjectModal = ({ onClose }) => {
           }}
           onKeyDown={(e) => {
             if (isComposingRef.current) return;
-            if (e.key === "Enter" && projectName.trim()) {
+            if (e.key === "Enter" && bookmarkName.trim()) {
               e.preventDefault();
               setTimeout(() => {
                 handleCreateProject();
@@ -109,14 +107,13 @@ export const NewProjectModal = ({ onClose }) => {
           <Icons.Bulb className="ml-1 p-2.5 w-10 h-10 text-gray-600" />
           <div className="ml-2 flex-1 flex flex-col justify-center items-start">
             <p className="text-xs text-gray-700 font-semibold">
-              프로젝트란 무엇인가요?
+              북마크란 무엇인가요?
             </p>
             <p className="text-xs text-gray-600">
-              프로젝트에서는 한 곳에 파일, 맞춤형 지침을 보관합니다. 지속적으로
-              진행되는 작업에,
+              북마크는 하나의 질문과 그에 대한 답변을 보관합니다.
             </p>
             <p className="text-xs text-gray-600">
-              또는 작업을 깔끔히 정리하기에 좋죠.
+              자주 물어보는 질문과 답변을 저장하기에 좋죠.
             </p>
           </div>
         </div>
@@ -132,17 +129,17 @@ export const NewProjectModal = ({ onClose }) => {
             className={classNames(
               "px-4 py-2 hover:opacity-80 rounded-full flex justify-center items-center",
               {
-                "cursor-pointer bg-black": projectName.trim(),
-                "cursor-not-allowed bg-gray-500": !projectName.trim(),
+                "cursor-pointer bg-black": bookmarkName.trim(),
+                "cursor-not-allowed bg-gray-500": !bookmarkName.trim(),
               }
             )}
             onClick={() => {
-              if (projectName.trim()) {
-                handleCreateProject();
+              if (bookmarkName.trim()) {
+                handleCreateBookmark();
               }
             }}
           >
-            <p className="font-semibold text-white">프로젝트 만들기</p>
+            <p className="font-semibold text-white">북마크 만들기</p>
           </div>
         </div>
       </div>

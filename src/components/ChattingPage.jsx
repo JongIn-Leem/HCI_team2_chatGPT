@@ -18,7 +18,8 @@ export const ChattingPage = ({
   responseThumbs = {},
   setResponseThumbs,
 }) => {
-  const { currentChat, currentProject } = useChatting();
+  const { currentChat, currentProject, bookmarkList, setBookmarkList } =
+    useChatting();
 
   return (
     <>
@@ -28,7 +29,39 @@ export const ChattingPage = ({
       >
         <div className="w-200">
           {currentChat.messages.map((msg, idx) => (
-            <ChatBubble key={idx} role={msg.role} content={msg.content} />
+            <div
+              key={idx}
+              id={`message-${currentChat.id}-${idx}`}
+              className="flex flex-col items-start"
+            >
+              <ChatBubble role={msg.role} content={msg.content} />
+              {msg.role === "assistant" && (
+                <ResponseButtons
+                  thumbs={responseThumbs?.[currentChat.id]?.[idx] || null}
+                  setThumbs={(thumb) =>
+                    setResponseThumbs((prev) => ({
+                      ...prev,
+                      [currentChat.id]: {
+                        ...prev[currentChat.id],
+                        [idx]: thumb,
+                      },
+                    }))
+                  }
+                  isBookMarked={bookmarkList.some(
+                    (bookmark) =>
+                      bookmark.cid === currentChat.id && bookmark.mid === idx
+                  )}
+                  deleteBookMark={() => {
+                    setBookmarkList((prev) =>
+                      prev.filter(
+                        (b) => !(b.cid === currentChat.id && b.mid === idx)
+                      )
+                    );
+                  }}
+                  mid={idx}
+                />
+              )}
+            </div>
           ))}
           {isResponding && pendingResponse && (
             <ResponseChatBubble
@@ -38,18 +71,6 @@ export const ChattingPage = ({
               setIsResponding={setIsResponding}
               bindInterruptRef={responseInterruptRef}
             />
-          )}
-          {!isResponding && (
-            <ResponseButtons
-              thumbs={responseThumbs[currentChat?.id] || null}
-              setThumbs={(thumb) =>
-                setResponseThumbs((prev) => ({
-                  ...prev,
-                  [currentChat.id]: thumb,
-                }))
-              }
-              responseInterruptRef={responseInterruptRef}
-            ></ResponseButtons>
           )}
           <div
             className="bg-transparent"

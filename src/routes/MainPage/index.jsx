@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   SideBar,
+  SubSideBar,
   Header,
   ChattingPage,
   NewChattingPage,
@@ -11,7 +12,7 @@ import { useSideBar, useChatting } from "@/contexts";
 import { randomResponse } from "@/data/RandomResponse";
 
 export default function MainPage() {
-  const { isSideBarOpen } = useSideBar();
+  const { isSideBarOpen, isSubSideBarOpen } = useSideBar();
   const { currentChat, currentProject } = useChatting();
 
   const HIDE_HEADER_PATHS = [];
@@ -36,6 +37,7 @@ export default function MainPage() {
   const [isResponding, setIsResponding] = useState(false);
   const [pendingResponse, setPendingResponse] = useState(null);
   const [responseThumbs, setResponseThumbs] = useState({});
+
   const [openProjects, setOpenProjects] = useState(new Set());
   const responseInterruptRef = useRef(null);
 
@@ -44,11 +46,6 @@ export default function MainPage() {
       const random =
         randomResponse[Math.floor(Math.random() * randomResponse.length)];
       setPendingResponse(random);
-
-      setResponseThumbs((prev) => ({
-        ...prev,
-        [currentChat.id]: null,
-      }));
     }
   }, [isResponding]);
 
@@ -65,13 +62,26 @@ export default function MainPage() {
   return (
     <div className="flex h-screen">
       <div
-        className={`bg-gray-300 overflow-x-hidden transition-all duration-300 ${
-          isSideBarOpen ? "w-64" : "w-0"
-        }`}
+        className={`bg-transparent overflow-x-hidden transition-all duration-300 ease-in-out
+          ${isSideBarOpen && !isSubSideBarOpen && "w-64 "}
+          ${!isSideBarOpen && isSubSideBarOpen && "w-64 "}
+          ${isSideBarOpen && isSubSideBarOpen && "w-64 "}
+          ${!isSideBarOpen && !isSubSideBarOpen && "w-0 "}
+          `}
       >
-        {isSideBarOpen && (
-          <SideBar openProjects={openProjects} setIsGPT={setIsGPT} />
-        )}
+        <SideBar
+          isOpen={isSideBarOpen}
+          openProjects={openProjects}
+          setIsGPT={setIsGPT}
+        />
+
+        <SubSideBar
+          isOpen={isSubSideBarOpen}
+          isSideBarOpen={isSideBarOpen}
+          openProjects={openProjects}
+          setOpenProjects={setOpenProjects}
+          chatRef={chatRef}
+        />
       </div>
       <div className="flex-1 flex flex-col justify-start items-center transition-transform duration-300">
         {shouldShowHeader && <Header />}

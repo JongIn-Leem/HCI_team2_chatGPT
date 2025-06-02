@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
+import { NewBookmarkModal } from "@/components";
 import * as Icons from "@/assets/svg";
 
-export const ResponseButtons = ({ thumbs, setThumbs }) => {
+export const ResponseButtons = ({
+  thumbs,
+  setThumbs,
+  isBookMarked,
+  deleteBookMark,
+  mid,
+}) => {
   const [hoveredId, setHoveredId] = useState(null);
   const [isCopied, setIsCopied] = useState(false);
 
@@ -11,6 +18,18 @@ export const ResponseButtons = ({ thumbs, setThumbs }) => {
       setIsCopied(false);
     }, 1000);
   }, [isCopied]);
+
+  const [isNewBookmarkOpen, setIsNewBookmarkOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setIsNewBookmarkOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <div className="w-full px-2 flex justify-start items-center">
@@ -35,6 +54,37 @@ export const ResponseButtons = ({ thumbs, setThumbs }) => {
           </div>
         )}
       </div>
+
+      {isBookMarked ? (
+        <div
+          className="relative flex flex-col items-center"
+          onMouseEnter={() => setHoveredId("bookmark")}
+          onMouseLeave={() => setHoveredId(null)}
+          onClick={deleteBookMark}
+        >
+          <Icons.KeepFill className="p-2 w-9 h-9 text-black hover:bg-gray-100 rounded-lg cursor-pointer" />
+          {hoveredId === "bookmark" && (
+            <div className="absolute top-full mt-1 px-2 py-1 text-sm font-semibold text-white bg-black rounded-lg shadow-md whitespace-nowrap z-10">
+              북마크 제거
+            </div>
+          )}
+        </div>
+      ) : (
+        <div
+          className="relative flex flex-col items-center"
+          onMouseEnter={() => setHoveredId("bookmark")}
+          onMouseLeave={() => setHoveredId(null)}
+          onClick={() => setIsNewBookmarkOpen(true)}
+        >
+          <Icons.Keep className="p-2 w-9 h-9 text-gray-500 hover:text-black hover:bg-gray-100 rounded-lg cursor-pointer" />
+          {hoveredId === "bookmark" && (
+            <div className="absolute top-full mt-1 px-2 py-1 text-sm font-semibold text-white bg-black rounded-lg shadow-md whitespace-nowrap z-10">
+              북마크 등록
+            </div>
+          )}
+        </div>
+      )}
+
       {!thumbs && (
         <>
           <div
@@ -93,6 +143,12 @@ export const ResponseButtons = ({ thumbs, setThumbs }) => {
           </div>
         )}
       </div>
+      {isNewBookmarkOpen && (
+        <NewBookmarkModal
+          onClose={() => setIsNewBookmarkOpen(false)}
+          mid={mid}
+        />
+      )}
     </div>
   );
 };

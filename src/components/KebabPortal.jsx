@@ -8,6 +8,7 @@ export const KebabPortal = ({
   kebabPos,
   kebabRef,
   kebabOpen,
+  handleDelete,
   handleDeleteOpen,
   handleMoveToProject,
   handleDeleteFromProject,
@@ -183,6 +184,18 @@ export const KebabPortal = ({
         >
           <Icons.Bin className="w-5 h-5 mr-2 text-red-600" />
           <p className="text-red-600">프로젝트 삭제</p>
+        </div>
+      );
+    }
+
+    if (kebabOpen.type === "bookmark") {
+      return (
+        <div
+          className="w-full px-2 py-1.5 flex items-center rounded-xl hover:bg-red-50 cursor-pointer"
+          onClick={handleDelete}
+        >
+          <Icons.Bin className="w-5 h-5 mr-2 text-red-600" />
+          <p className="text-red-600">북마크에서 삭제</p>
         </div>
       );
     }
