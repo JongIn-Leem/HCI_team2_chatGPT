@@ -4,7 +4,7 @@ import { useChatting } from "@/contexts";
 import classNames from "classnames";
 import ReactDOM from "react-dom";
 
-export const NewProjectModal = ({ onClose }) => {
+export const NewProjectModal = ({ onClose, promptModalRef }) => {
   const isComposingRef = useRef(false);
   const isCreatingRef = useRef(false);
   const modalRef = useRef(null);
@@ -21,14 +21,10 @@ export const NewProjectModal = ({ onClose }) => {
   const [projectName, setProjectName] = useState("");
 
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (modalRef.current && !modalRef.current.contains(e.target)) {
-        onClose();
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [onClose]);
+    if (promptModalRef && promptModalRef.current == null) {
+      promptModalRef.current = modalRef.current;
+    }
+  }, [promptModalRef]);
 
   const handleCreateProject = () => {
     if (isCreatingRef.current) return;
@@ -57,7 +53,6 @@ export const NewProjectModal = ({ onClose }) => {
     setCurrentChat(null);
     onClose();
 
-    // 잠금 해제
     setTimeout(() => {
       isCreatingRef.current = false;
     }, 300);
@@ -66,7 +61,10 @@ export const NewProjectModal = ({ onClose }) => {
   if (typeof window === "undefined") return null;
 
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+    <div
+      ref={promptModalRef}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+    >
       <div
         ref={modalRef}
         className="w-140 h-80 p-4 px-6 flex flex-col items-center justify-start border border-gray-300 bg-white rounded-xl shadow-xl"
@@ -85,9 +83,7 @@ export const NewProjectModal = ({ onClose }) => {
           autoFocus
           ref={inputRef}
           onChange={(e) => setProjectName(e.target.value)}
-          onCompositionStart={() => {
-            isComposingRef.current = true;
-          }}
+          onCompositionStart={() => (isComposingRef.current = true)}
           onCompositionEnd={() => {
             setTimeout(() => {
               isComposingRef.current = false;
@@ -112,11 +108,10 @@ export const NewProjectModal = ({ onClose }) => {
               프로젝트란 무엇인가요?
             </p>
             <p className="text-xs text-gray-600">
-              프로젝트에서는 한 곳에 파일, 맞춤형 지침을 보관합니다. 지속적으로
-              진행되는 작업에,
+              프로젝트에서는 한 곳에 파일, 맞춤형 지침을 보관합니다.
             </p>
             <p className="text-xs text-gray-600">
-              또는 작업을 깔끔히 정리하기에 좋죠.
+              지속적으로 진행되는 작업을 깔끔히 정리하기에 좋습니다.
             </p>
           </div>
         </div>
