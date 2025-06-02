@@ -10,6 +10,7 @@ export const ProjectDetailPage = ({
   isResponding,
   setIsResponding,
   responseInterruptRef,
+  setIsGPT,
 }) => {
   const { chatList, currentProject } = useChatting();
   const [kebabOpen, setKebabOpen] = useState({ type: null, id: null });
@@ -47,6 +48,7 @@ export const ProjectDetailPage = ({
             setIsResponding={setIsResponding}
             responseInterruptRef={responseInterruptRef}
             onSendStartTransition={handleStartTransition}
+            setIsGPT={setIsGPT}
           />
         </div>
         <div

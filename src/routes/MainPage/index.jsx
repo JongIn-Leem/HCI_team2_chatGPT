@@ -12,7 +12,7 @@ import { useSideBar, useChatting } from "@/contexts";
 import { randomResponse } from "@/data/RandomResponse";
 
 export default function MainPage() {
-  const { isSideBarOpen, isSubSideBarOpen } = useSideBar();
+  const { isSideBarOpen, subSideBarOpen } = useSideBar();
   const { currentChat, currentProject } = useChatting();
 
   const HIDE_HEADER_PATHS = [];
@@ -59,14 +59,20 @@ export default function MainPage() {
     });
   }, [currentChat?.project]);
 
+  useEffect(() => {
+    if (currentChat || currentProject) {
+      setIsGPT(false);
+    }
+  }, [currentChat, currentProject]);
+
   return (
     <div className="flex h-screen">
       <div
         className={`bg-transparent overflow-x-hidden transition-all duration-300 ease-in-out
-          ${isSideBarOpen && !isSubSideBarOpen && "w-64 "}
-          ${!isSideBarOpen && isSubSideBarOpen && "w-64 "}
-          ${isSideBarOpen && isSubSideBarOpen && "w-64 "}
-          ${!isSideBarOpen && !isSubSideBarOpen && "w-0 "}
+          ${isSideBarOpen && !subSideBarOpen && "w-64 "}
+          ${!isSideBarOpen && subSideBarOpen && "w-64 "}
+          ${isSideBarOpen && subSideBarOpen && "w-64 "}
+          ${!isSideBarOpen && !subSideBarOpen && "w-0 "}
           `}
       >
         <SideBar
@@ -76,7 +82,7 @@ export default function MainPage() {
         />
 
         <SubSideBar
-          isOpen={isSubSideBarOpen}
+          isOpen={subSideBarOpen}
           isSideBarOpen={isSideBarOpen}
           openProjects={openProjects}
           setOpenProjects={setOpenProjects}
@@ -84,7 +90,7 @@ export default function MainPage() {
         />
       </div>
       <div className="flex-1 flex flex-col justify-start items-center transition-transform duration-300">
-        {shouldShowHeader && <Header />}
+        {shouldShowHeader && <Header setIsGPT={setIsGPT} />}
         {currentChat && (
           <ChattingPage
             chatRef={chatRef}
@@ -97,6 +103,7 @@ export default function MainPage() {
             setPendingResponse={setPendingResponse}
             responseThumbs={responseThumbs}
             setResponseThumbs={setResponseThumbs}
+            setIsGPT={setIsGPT}
           />
         )}
         {!currentChat && !currentProject && isGPT && <GPTPage />}
@@ -107,6 +114,7 @@ export default function MainPage() {
             isResponding={isResponding}
             setIsResponding={setIsResponding}
             responseInterruptRef={responseInterruptRef}
+            setIsGPT={setIsGPT}
           />
         )}
         {!currentChat && currentProject && (
@@ -116,6 +124,7 @@ export default function MainPage() {
             isResponding={isResponding}
             setIsResponding={setIsResponding}
             responseInterruptRef={responseInterruptRef}
+            setIsGPT={setIsGPT}
           />
         )}
       </div>

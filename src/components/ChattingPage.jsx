@@ -17,6 +17,7 @@ export const ChattingPage = ({
   setPendingResponse,
   responseThumbs = {},
   setResponseThumbs,
+  setIsGPT,
 }) => {
   const { currentChat, currentProject, bookmarkList, setBookmarkList } =
     useChatting();
@@ -85,6 +86,7 @@ export const ChattingPage = ({
           isResponding={isResponding}
           setIsResponding={setIsResponding}
           responseInterruptRef={responseInterruptRef}
+          setIsGPT={setIsGPT}
         />
         <p className="w-full h-8 flex items-center justify-center bg-white text-sm text-gray-700">
           ChatGPT는 실수를 할 수 있습니다. 중요한 정보는 재차 확인하세요.

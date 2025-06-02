@@ -11,7 +11,7 @@ const SideBarContext = createContext(DEFAULT_CONTEXT_VALUE);
 
 const SideBarProvider = ({ children }) => {
   const [isSideBarOpen, setSideBarOpen] = useState(false);
-  const [isSubSideBarOpen, setSubSideBarOpen] = useState(false);
+  const [subSideBarOpen, setSubSideBarOpen] = useState(false);
 
   const sideBarToggle = () => {
     setSideBarOpen((prev) => !prev);
@@ -25,7 +25,7 @@ const SideBarProvider = ({ children }) => {
       value={{
         isSideBarOpen,
         sideBarToggle,
-        isSubSideBarOpen,
+        subSideBarOpen,
         subSideBarToggle,
       }}
     >
@@ -35,12 +35,12 @@ const SideBarProvider = ({ children }) => {
 };
 
 const useSideBar = () => {
-  const { isSideBarOpen, sideBarToggle, isSubSideBarOpen, subSideBarToggle } =
+  const { isSideBarOpen, sideBarToggle, subSideBarOpen, subSideBarToggle } =
     useContext(SideBarContext);
   if (!sideBarToggle || !subSideBarToggle) {
     throw new Error("useSideBar must be used within a SideBarProvider");
   }
-  return { isSideBarOpen, sideBarToggle, isSubSideBarOpen, subSideBarToggle };
+  return { isSideBarOpen, sideBarToggle, subSideBarOpen, subSideBarToggle };
 };
 
 export { SideBarProvider, useSideBar };

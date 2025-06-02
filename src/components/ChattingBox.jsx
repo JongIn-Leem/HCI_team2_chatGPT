@@ -3,6 +3,7 @@ import { useChatting } from "@/contexts/ChattingContext";
 import classNames from "classnames";
 import { useRef, useEffect, useState } from "react";
 import { KebabPortal } from "@/components";
+import { createPortal } from "react-dom";
 
 export const ChattingBox = ({ chat, isActive, kebabOpen, setKebabOpen }) => {
   const { setChatList, setCurrentChat, projectList, setCurrentProject } =
@@ -135,7 +136,7 @@ export const ChattingBox = ({ chat, isActive, kebabOpen, setKebabOpen }) => {
       )}
       {isDeleteOpen && (
         <DeleteModal
-          chat={chat}
+          chatTitle={chatTitle}
           onClose={() => setIsDeleteOpen(false)}
           handleDelete={handleDelete}
         />
@@ -144,18 +145,18 @@ export const ChattingBox = ({ chat, isActive, kebabOpen, setKebabOpen }) => {
   );
 };
 
-const DeleteModal = ({ chat, onClose, handleDelete }) => {
-  return (
+const DeleteModal = ({ chatTitle, onClose, handleDelete }) => {
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
       <div className="w-120 h-60 p-4 px-6 flex flex-col items-center justify-start border-1 border-gray-300 bg-white rounded-xl shadow-xl">
         <div className="w-full my-3 flex justify-start items-center">
           <p className="text-xl font-semibold">채팅을 삭제하시겠습니까?</p>
         </div>
-        <hr className="text-gray-300 w-120 mt-3 mb-5"></hr>
+        <hr className="text-gray-300 w-120 mt-3 mb-5" />
         <div className="w-full mb-5 flex flex-col justify-center items-start">
           <p className="text-lg mb-2">
             이 행동으로
-            <span className="font-bold"> {chat.title}</span>
+            <span className="font-bold"> {chatTitle}</span>
             이(가) 삭제됩니다.
           </p>
           <p className="text-sm font-semibold text-gray-500">
@@ -167,18 +168,19 @@ const DeleteModal = ({ chat, onClose, handleDelete }) => {
         <div className="w-full flex justify-end items-center">
           <div
             className="px-4 py-2 mr-3 border-1 border-gray-300 hover:bg-gray-200 cursor-pointer rounded-full flex justify-center items-center"
-            onClick={() => onClose()}
+            onClick={onClose}
           >
             <p className="font-semibold">취소</p>
           </div>
           <div
             className="px-4 py-2 bg-red-600 hover:bg-red-800 rounded-full flex justify-center items-center cursor-pointer"
-            onClick={() => handleDelete()}
+            onClick={handleDelete}
           >
             <p className="font-semibold text-white">삭제</p>
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
