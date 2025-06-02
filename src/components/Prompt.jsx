@@ -2,7 +2,7 @@ import * as Icons from "@/assets/svg";
 import classNames from "classnames";
 import { useState, useEffect, useRef } from "react";
 import { useChatting } from "@/contexts/";
-import { PromptButtons } from "@/components";
+import { PromptButtons, ProjectPortal } from "@/components";
 
 export const Prompt = ({
   chatRef,
@@ -25,6 +25,62 @@ export const Prompt = ({
   } = useChatting();
   const isComposingRef = useRef(false);
   const textareaRef = useRef(null);
+  const [isProjectOpen, setIsProjectOpen] = useState(false);
+  const [projectPos, setProjectPos] = useState({ top: 0, left: 0 });
+  const [selectedProject, setSelectedProject] = useState(null);
+  const projectRef = useRef(null);
+  const newProjectModalRef = useRef(null);
+  const projectButtonRef = useRef(null);
+
+  const handleProjectClick = () => {
+    if (isProjectOpen) {
+      setIsProjectOpen(false);
+      return;
+    }
+
+    const rect = projectButtonRef.current.getBoundingClientRect();
+    setProjectPos({
+      top: currentChat
+        ? rect.top + window.scrollY - 155
+        : rect.bottom + window.scrollY + 6,
+      left: rect.left + window.scrollX - 15,
+    });
+    setIsProjectOpen(true);
+  };
+
+  useEffect(() => {
+    if (isProjectOpen && projectRef.current && projectButtonRef.current) {
+      const buttonRect = projectButtonRef.current.getBoundingClientRect();
+      const portalRect = projectRef.current.getBoundingClientRect();
+
+      const top = currentChat
+        ? buttonRect.top + window.scrollY - portalRect.height - 5
+        : buttonRect.bottom + window.scrollY + 6;
+
+      const left = buttonRect.left + window.scrollX - 15;
+
+      setProjectPos({ top, left });
+    }
+  }, [isProjectOpen]);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      const target = e.target;
+      if (
+        projectRef.current &&
+        !projectRef.current.contains(target) &&
+        !projectButtonRef.current.contains(target) &&
+        !(
+          newProjectModalRef.current &&
+          newProjectModalRef.current.contains(target)
+        )
+      ) {
+        setIsProjectOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const scroll = chatRef.current;
@@ -90,7 +146,7 @@ export const Prompt = ({
     const trimmedText = text.trim();
     const newMessage = { role: "user", content: trimmedText };
 
-    if (currentChat) {
+    if (!selectedProject && currentChat) {
       setChatList((prevList) =>
         prevList.map((chat) =>
           chat.id === currentChat.id
@@ -111,7 +167,7 @@ export const Prompt = ({
         titleText.length > 25 ? titleText.slice(0, 25) + ".." : titleText;
       const newChat = {
         id: Date.now(),
-        project: currentProject?.id ?? null,
+        project: selectedProject?.id ?? null,
         title,
         updatedAt: Date.now(),
         messages: [newMessage],
@@ -129,6 +185,10 @@ export const Prompt = ({
     }, 0);
     setIsResponding(true);
   };
+
+  useEffect(() => {
+    setSelectedProject(currentProject);
+  }, [currentProject]);
 
   useEffect(() => {
     if (text.trim() === "") {
@@ -160,11 +220,30 @@ export const Prompt = ({
           </div>
         </div>
       )}
-      <div className="z-20 bg-white rounded-3xl border-2 border-gray-200">
-        <div className="px-5 pt-5">
+      <div className="w-200 z-20 bg-white rounded-3xl border-2 border-gray-200">
+        <div className="pt-7">
+          {!(!currentChat && currentProject) && (
+            <div className="px-3 pb-7 w-190 h-10 flex items-center justify-start">
+              <div
+                ref={projectButtonRef}
+                className="rounded-xl hover:bg-gray-100 flex justify-start items-center cursor-pointer"
+                onClick={handleProjectClick}
+              >
+                <Icons.Folder className="p-2.5 w-10 h-10" />
+                <p>
+                  {selectedProject ? selectedProject.title : "프로젝트 선택"}
+                </p>
+                {!currentChat ? (
+                  <Icons.ArrowDown className="p-2.5 w-10 h-10" />
+                ) : (
+                  <Icons.ArrowUp className="p-2.5 w-10 h-10" />
+                )}
+              </div>
+            </div>
+          )}
           <textarea
             ref={textareaRef}
-            className="w-190 min-h-10 max-h-60 leading-tight overflow-y-auto text-lg text-gray-600 outline-none resize-none"
+            className="px-5 w-200 min-h-10 max-h-60 leading-tight overflow-y-auto text-lg text-gray-600 outline-none resize-none"
             placeholder={
               !currentChat && currentProject
                 ? "이 프로젝트 내 새 채팅"
@@ -186,6 +265,16 @@ export const Prompt = ({
           responseInterruptRef={responseInterruptRef}
           setIsGPT={setIsGPT}
         ></PromptButtons>
+        {isProjectOpen && (
+          <ProjectPortal
+            setIsProjectOpen={setIsProjectOpen}
+            projectRef={projectRef}
+            projectPos={projectPos}
+            setSelectedProject={setSelectedProject}
+            selectedProject={selectedProject}
+            newProjectModalRef={newProjectModalRef}
+          />
+        )}
       </div>
     </div>
   );

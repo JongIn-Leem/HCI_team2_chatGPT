@@ -18,3 +18,4 @@ export * from "./NewProjectModal";
 export * from "./GPTPage";
 export * from "./SubSideBar";
 export * from "./NewBookmarkModal";
+export * from "./ProjectPortal";
