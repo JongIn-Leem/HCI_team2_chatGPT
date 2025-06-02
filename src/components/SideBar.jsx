@@ -110,6 +110,7 @@ export const SideBar = ({ openProjects = new Set(), setIsGPT }) => {
             onClick={() => {
               setCurrentChat(null);
               setCurrentProject(null);
+              setIsGPT(false);
             }}
           >
             <Icons.NewChat className="p-2.5 w-10 h-10"></Icons.NewChat>
@@ -134,7 +135,11 @@ export const SideBar = ({ openProjects = new Set(), setIsGPT }) => {
           </div>
           <div
             className="w-full flex items-center rounded-lg pr-2 hover:bg-gray-200 cursor-pointer"
-            onClick={() => setIsGPT(true)}
+            onClick={() => {
+              setCurrentChat(null);
+              setCurrentProject(null);
+              setIsGPT(true);
+            }}
           >
             <Icons.Grid className="p-2.5 w-10 h-10"></Icons.Grid>
             <p className="text-base">GPT</p>

@@ -62,6 +62,12 @@ export default function MainPage() {
     });
   }, [currentChat?.project]);
 
+  useEffect(() => {
+    if (currentChat || currentProject) {
+      setIsGPT(false);
+    }
+  }, [currentChat, currentProject]);
+
   return (
     <div className="flex h-screen">
       <div
@@ -74,7 +80,7 @@ export default function MainPage() {
         )}
       </div>
       <div className="flex-1 flex flex-col justify-start items-center transition-transform duration-300">
-        {shouldShowHeader && <Header />}
+        {shouldShowHeader && <Header setIsGPT={setIsGPT} />}
         {currentChat && (
           <ChattingPage
             chatRef={chatRef}

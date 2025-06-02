@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useSideBar } from "@/contexts";
 import { useChatting } from "@/contexts/ChattingContext";
 
-export const Header = () => {
+export const Header = ({ setIsGPT }) => {
   const { isSideBarOpen, sideBarToggle } = useSideBar();
   const [showIcon, setShowIcon] = useState(true);
   const { currentChat, setCurrentChat, currentProject, setCurrentProject } =
@@ -40,6 +40,7 @@ export const Header = () => {
                 onClick={() => {
                   setCurrentChat(null);
                   setCurrentProject(null);
+                  setIsGPT(false);
                 }}
               />
             </div>

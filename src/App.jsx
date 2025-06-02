@@ -1,5 +1,5 @@
 import "./App.css";
-import MainPage from "./routes/MainPage";
+import MainPage from "@/routes/MainPage";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { SideBarProvider, ChattingProvider } from "./contexts";
 
@@ -21,7 +21,7 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/HCI_team2_chatGPT/">
       <AppContent />
     </BrowserRouter>
   );
