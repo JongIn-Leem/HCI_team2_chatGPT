@@ -12,7 +12,7 @@ export const GPTPage = () => {
       </div>
 
       {/* 검색창 */}
-      <div className="bg-token-bg-primary sticky top-14 z-0 -mt-2 mb-12 flex flex-col gap-6 pt-2 [@media(min-width:1560px)]:top-0">
+      <div className="bg-white sticky top-16 z-20 -mt-2 mb-12 flex flex-col gap-6 pt-2 [@media(min-width:1560px)]:top-0">
         <div className="relative z-0 flex items-center">
           <svg
             width="24"

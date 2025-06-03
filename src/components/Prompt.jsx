@@ -153,7 +153,7 @@ export const Prompt = ({
       currentProject &&
       selectedProject.id === currentProject.id;
 
-    if (isSameProject && currentChat) {
+    if ((isSameProject || !currentProject) && currentChat) {
       setChatList((prevList) =>
         prevList.map((chat) =>
           chat.id === currentChat.id
@@ -221,7 +221,7 @@ export const Prompt = ({
   return (
     <div className="w-200 bg-transparent rounded-3xl flex flex-col justify-center items-center">
       {currentChat && (
-        <div className="z-20 fixed bottom-45 bg-transparent flex flex-col justify-center items-center">
+        <div className="z-20 fixed bottom-52 bg-transparent flex flex-col justify-center items-center">
           <div
             className={classNames(
               "w-10 h-10 mb-5 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center transition-opacity duration-300",

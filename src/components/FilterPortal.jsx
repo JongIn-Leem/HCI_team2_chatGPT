@@ -68,7 +68,7 @@ export const FilterPortal = ({
       <div
         ref={GPTRef}
         style={{
-          top: `${filterPos.top + (currentChat ? 85 : 0)}px`,
+          top: `${filterPos.top + (currentChat ? 32 : 0)}px`,
           left: `${filterPos.left + 185}px`,
         }}
         onMouseEnter={() => {
@@ -147,7 +147,7 @@ export const FilterPortal = ({
           ref={filterRef}
           className="fixed z-50 w-52 bg-white border border-gray-300 rounded-3xl shadow-md"
           style={{
-            top: `${filterPos.top + (currentChat ? 85 : 0)}px`,
+            top: `${filterPos.top + (currentChat ? 32 : 0)}px`,
             left: `${filterPos.left}px`,
           }}
         >

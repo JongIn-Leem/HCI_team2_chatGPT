@@ -136,7 +136,7 @@ export const ChattingBox = ({ chat, isActive, kebabOpen, setKebabOpen }) => {
       )}
       {isDeleteOpen && (
         <DeleteModal
-          chatTitle={chatTitle}
+          chatTitle={chatTitle(chat)}
           onClose={() => setIsDeleteOpen(false)}
           handleDelete={handleDelete}
         />
