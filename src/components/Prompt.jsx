@@ -68,7 +68,7 @@ export const Prompt = ({
 
     const totalLines = lines.length;
 
-    const baseHeight = window.innerHeight * 0.8; // 80vh
+    const baseHeight = window.innerHeight * 0.9; // 80vh
     const minPadding = window.innerHeight * 0.2; // 최소 20vh 확보
     const padding = Math.max(baseHeight - totalLines * lineHeight, minPadding);
 
