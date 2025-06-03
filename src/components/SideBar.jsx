@@ -67,7 +67,7 @@ export const SideBar = ({ isOpen, openProjects = new Set(), setIsGPT }) => {
             onClick={() => {
               setCurrentChat(null);
               setCurrentProject(null);
-              setIsGPT(false);
+              setIsGPT(true);
             }}
           >
             <Icons.ChatGPTLogo className="p-2.5 w-10 h-10"></Icons.ChatGPTLogo>

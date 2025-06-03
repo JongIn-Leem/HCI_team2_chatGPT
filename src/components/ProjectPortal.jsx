@@ -12,8 +12,13 @@ export const ProjectPortal = ({
   setSelectedProject,
   newProjectModalRef,
 }) => {
-  const { projectList, setCurrentChat, currentProject, setCurrentProject } =
-    useChatting();
+  const {
+    projectList,
+    currentChat,
+    setCurrentChat,
+    currentProject,
+    setCurrentProject,
+  } = useChatting();
 
   const [isNewProjectOpen, setIsNewProjectOpen] = useState(false);
 
@@ -79,7 +84,11 @@ export const ProjectPortal = ({
                 }}
                 className="w-full px-2 py-2 flex justify-between items-center rounded-xl hover:bg-gray-100 cursor-pointer"
               >
-                <p>{currentProject ? "선택 안 함" : "현재 채팅에서 계속"}</p>
+                <p>
+                  {currentChat && !currentProject
+                    ? "현재 채팅에서 계속"
+                    : "선택 안 함"}
+                </p>
               </div>
             )}
 
