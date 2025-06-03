@@ -12,7 +12,7 @@ export const GPTPage = () => {
       </div>
 
       {/* 검색창 */}
-      <div className="bg-token-bg-primary sticky top-14 z-0 -mt-2 mb-12 flex flex-col gap-6 pt-2 [@media(min-width:1560px)]:top-0">
+      <div className="bg-white sticky top-16 z-20 -mt-2 mb-12 flex flex-col gap-6 pt-2 [@media(min-width:1560px)]:top-0">
         <div className="relative z-0 flex items-center">
           <svg
             width="24"
@@ -35,7 +35,7 @@ export const GPTPage = () => {
                 <input
                   id="search"
                   name="search"
-                  className="block w-full border-0 p-0 shadow-none outline-hidden bg-token-main-surface-primary text-token-text-primary placeholder-gray-500 py-4 px-3 rounded-xl font-normal text-base ps-12"
+                  className="block w-full border-0 p-0 shadow-none outline-hidden bg-white text-token-text-primary placeholder-gray-500 py-4 px-3 rounded-xl font-normal text-base ps-12"
                   type="text"
                   placeholder="GPT 검색"
                   autoComplete="off"
@@ -48,7 +48,7 @@ export const GPTPage = () => {
         </div>
       </div>
 
-      <div className="bg-token-main-surface-primary sticky top-14 z-10 -ms-4 w-screen py-2 text-sm md:ms-0 md:w-full md:pb-0">
+      <div className="bg-white sticky top-14 z-10 -ms-4 w-screen py-2 text-sm md:ms-0 md:w-full md:pb-0">
         <div className="mb-10 no-scrollbar flex scroll-m-5 gap-1.5 overflow-x-auto md:overflow-hidden">
           <div className="text-base md:text-token-text-primary cursor-pointer scroll-mx-5 rounded-3xl px-3 py-2 whitespace-nowrap select-none first:ms-4 last:me-4 md:bg-transparent md:px-2 md:first:ms-0 md:last:me-0 border-token-text-primary text-token-main-surface-primary bg-black md:rounded-none md:border-b-2 dark:bg-gray-100 dark:md:bg-transparent">
             최상위 선택 항목
