@@ -155,7 +155,7 @@ const DeleteModal = ({ chatTitle, onClose, handleDelete }) => {
         <div className="w-full mb-5 flex flex-col justify-center items-start">
           <p className="text-lg mb-2">
             이 행동으로
-            <span className="font-bold"> {chat.title}</span>
+            <span className="font-bold">{chatTitle}</span>
             이(가) 삭제됩니다.
           </p>
           <p className="text-sm font-semibold text-gray-500">
