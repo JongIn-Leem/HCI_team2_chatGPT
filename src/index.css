@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  font-family: ui-sans-serif, -apple-system, system-ui, Segoe UI, Helvetica,
-    Apple Color Emoji, Arial, sans-serif, Segoe UI Emoji, Segoe UI Symbol;
+  font-family: "Pretendard", ui-sans-serif, -apple-system, system-ui, Segoe UI,
+    Helvetica, Apple Color Emoji, Arial, sans-serif, Segoe UI Emoji,
+    Segoe UI Symbol;
   line-height: 1.7;
   font-size: 15px;
   font-weight: 400;
@@ -44,7 +45,7 @@
 
 @font-face {
   font-family: "Pretendard";
-  src: url("/HCI_team2_chatGPT/fonts/PretendardVariable.woff2") format("woff2");
+  src: url("/fonts/PretendardVariable.woff2") format("woff2");
   font-weight: 45 920;
   font-style: normal;
   font-display: swap;
