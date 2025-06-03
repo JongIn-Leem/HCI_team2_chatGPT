@@ -110,18 +110,25 @@ export const Prompt = ({
   };
 
   const estimatePaddingFromText = (text) => {
-    const MAX_WIDTH_CHARS = 75; // 한 줄에 들어갈 최대 문자 수 (공백 포함)
-    const lineHeight = 22.5; // 한 줄 높이(px)
+    const rootFontSize = parseFloat(
+      getComputedStyle(document.documentElement).fontSize
+    ); // ex: 15px
+    const lineHeight = rootFontSize * 1.5; // 1.5rem → 22.5px
+    const charWidth = rootFontSize * 0.6; // 평균 한 글자 폭 약 0.6em
+    const maxCharsPerLine = Math.floor((window.innerWidth * 0.9) / charWidth); // 90% 기준
 
     const lines = text.split("\n").flatMap((line) => {
       const len = line.length;
-      const wrapped = Math.ceil(len / MAX_WIDTH_CHARS);
+      const wrapped = Math.ceil(len / maxCharsPerLine);
       return Array(wrapped).fill(1);
     });
 
     const totalLines = lines.length;
 
-    const padding = Math.max(770 - totalLines * lineHeight, 200); // 최소 200px 보장
+    const baseHeight = window.innerHeight * 0.9; // 80vh
+    const minPadding = window.innerHeight * 0.2; // 최소 20vh 확보
+    const padding = Math.max(baseHeight - totalLines * lineHeight, minPadding);
+
     return padding;
   };
 
@@ -149,11 +156,12 @@ export const Prompt = ({
     const newMessage = { role: "user", content: trimmedText };
 
     const isSameProject =
-      selectedProject &&
-      currentProject &&
-      selectedProject.id === currentProject.id;
+      (selectedProject &&
+        currentProject &&
+        selectedProject.id === currentProject.id) ||
+      (currentChat && !currentProject && !selectedProject);
 
-    if ((isSameProject || !currentProject) && currentChat) {
+    if (isSameProject && currentChat) {
       setChatList((prevList) =>
         prevList.map((chat) =>
           chat.id === currentChat.id
