@@ -135,7 +135,7 @@ export const ChattingBox = ({ chat, isActive, kebabOpen, setKebabOpen }) => {
       )}
       {isDeleteOpen && (
         <DeleteModal
-          chat={chat}
+          chatTitle={chatTitle(chat)}
           onClose={() => setIsDeleteOpen(false)}
           handleDelete={handleDelete}
         />
@@ -144,7 +144,7 @@ export const ChattingBox = ({ chat, isActive, kebabOpen, setKebabOpen }) => {
   );
 };
 
-const DeleteModal = ({ chat, onClose, handleDelete }) => {
+const DeleteModal = ({ chatTitle, onClose, handleDelete }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
       <div className="w-120 h-60 p-4 px-6 flex flex-col items-center justify-start border-1 border-gray-300 bg-white rounded-xl shadow-xl">
